@@ -7,36 +7,52 @@ import { useState } from "react";
 function Login({ handleSubmit, btnText, userData }) {
   const [user, setUser] = useState(userData || { email: "", password: "" });
   const [msg, setMsg] = useState("");
-
   function Submit(e) {
     e.preventDefault();
-
+  
+    // Verificação se os campos estão vazios
     if (!user.email || !user.password) {
       setMsg("Preencha todos os campos");
       return;
     }
     console.log(user);
-
+  
+    // Enviando os dados para o servidor
     fetch("http://localhost:5000/Login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
-      credentials: "include",
+      credentials: "include", // Enviar cookies, se necessário
     })
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.ok) {
+          return resp.json(); // Retorna a resposta como JSON
+        } else if (resp.status === 401) {
+          // Erro de login, senha ou e-mail incorretos
+          return resp.json().then((data) => {
+            setMsg(data.message || "Erro ao realizar login, E-mail ou senha incorretos!");
+            throw new Error(data.message || "E-mail ou senha incorretos");
+          });
+        } else {
+          return resp.json().then((data) => {
+            setMsg(data.message || "Erro ao realizar login!");
+            throw new Error("Erro desconhecido no servidor");
+          });
+        }
+      })
       .then((data) => {
         console.log(data);
         setMsg("Login realizado com sucesso!");
-        window.location.href = "/MeusProjetos";
+        window.location.href = "/MeusProjetos"; // Redirecionar para a página de projetos
       })
       .catch((erro) => {
         console.log(erro);
-        setMsg("Erro ao realizar login!");
+        // Se ocorrer erro, a mensagem será exibida pelo `setMsg` acima.
       });
   }
-
+  
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
   }

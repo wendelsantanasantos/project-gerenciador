@@ -174,12 +174,19 @@ app.post("/Login", async (req, res) => {
       return res.status(401).json({ message: "Usuário não encontrado" });
     }
 
+    // Verificando a senha
+    console.log("Verificando a senha do usuário", user.password);
+
     const senhaCorreta = await bcrypt.compare(password, user.password);
     if (!senhaCorreta) {
+      console.log("Senha incorreta");
       return res.status(401).json({ message: "Usuário ou senha incorretos" });
     }
 
     // Gerar o token
+
+    console.log("Usuário autenticado com sucesso! ID:", user.id);
+
     const token = generateToken(user.id);
     console.log("Token gerado:", token); // Log para ver o token gerado
 
