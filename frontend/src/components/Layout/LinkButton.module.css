@@ -1,0 +1,13 @@
+.linkbutton{
+    background-color: var(--backgroundcolor--);
+    color: #fff;
+    text-decoration: none;
+    padding: .5em 1em;
+    border-radius: .2em;
+    transition: 0.3s ease-in-out;
+    min-width: 120px;
+}
+
+.linkbutton:hover{
+    color: var(--textColor--);
+}

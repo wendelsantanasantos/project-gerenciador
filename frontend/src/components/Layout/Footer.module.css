@@ -1,0 +1,36 @@
+
+
+.footer{
+    background-color: var(--backgroundcolor--);
+    color: #fff;
+    padding: 2em;
+    text-align: center;
+    width: 100%;
+    z-index: 5 !important;
+    position: relative;
+}
+
+.footer ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.footer ul li{
+    margin:0 .5em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.footer ul li :hover{
+  color: var(--textColor--);
+}
+
+.footer p{
+    margin-top: 1em;
+}
+
+.footer span{
+    color: var(--textColor--);
+    font-weight: bold;
+}

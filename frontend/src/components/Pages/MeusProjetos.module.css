@@ -1,0 +1,13 @@
+.meusProjetos_container{
+    padding: 1em;
+    margin: auto;
+    margin-top: 6em;
+    width:70%;
+    min-height: 80vh;
+}
+
+.meusProjetos_header{
+    display: flex;
+    justify-content:space-between;
+    margin-bottom: 2em;
+}

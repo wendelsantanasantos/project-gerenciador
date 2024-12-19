@@ -1,0 +1,79 @@
+.form{
+    background-color: #fff;
+    padding: 3em;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+    margin: 2em auto;
+ }
+
+/* Estilizando o input[type="file"] */
+.form input[type="file"] {
+    display: none; /* Esconde o campo de entrada de arquivo padrão */
+}
+
+/* Criando um botão personalizado para selecionar arquivos */
+.form .file_upload_btn {
+    display: block;
+    height: 5em;
+    padding: 0.7em 1.5em;
+    background-color: #53535350;
+    color: white;
+    border-radius: .5em;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 3em;
+    transition: .5s ease-in-out;
+}
+
+.form  .file_upload_btn svg{
+    margin-top: .3em;
+    color: black;
+    font-size: 1.6em;
+}
+
+.form .file_upload_btn:hover {
+    background-color: #757474b0;
+}
+
+.form label {
+    cursor: pointer;
+    
+}
+
+.form .file_upload_btn span {
+    font-size: 1em;
+    margin-left: .5em;
+    font-weight: bold;
+    display: block;
+}
+
+.form .filesCard{
+    display: inline-block;
+    width: 20%;
+    height: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: .5em;
+    margin: .5em;
+    margin-bottom: 3em;
+   
+}
+
+.form .filesContainer {
+   display: flex;
+}
+
+.filesCard img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: 1em;
+}
+
+.filesCard iframe{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: 1em;
+}

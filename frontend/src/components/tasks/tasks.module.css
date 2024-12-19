@@ -1,0 +1,108 @@
+.Task{
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: .5em;
+    margin: .5em;
+}
+
+.taskHeader{
+   display: flex;
+}
+
+.Task p{
+    color: #727070;
+    margin-bottom: .2em;
+    display: flex;
+    align-items: center;
+ 
+}
+
+.Task p span{
+    font-weight: bold;
+    margin-right: .3em;
+}
+
+.category_text{
+    display: flex;
+    align-items: center;
+}
+
+.category_text span{
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 5px;
+}
+
+.Task_actions a,
+.Task_actions button{
+    text-decoration: none;
+    border: none;
+    color: #222;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin-right: 1em;
+    padding: .6em 1em;
+    border: 1px solid #222;
+    transition: ease-in-out .5s;
+}
+
+.Task_actions svg{
+    margin-right: .5em;
+}
+
+.Task_actions a:hover,
+.Task_actions button:hover{
+    background-color: #222;
+    color:var(--textColor--);
+}
+
+.category_text .infraestrutura{
+ background-color: rgb(140, 175, 250);
+}
+
+.category_text .desenvolvimento{
+    background-color: rgb(185, 250, 141);
+}
+
+.category_text .design{
+    background-color: rgb(245, 150, 150);
+}
+
+.category_text .planejamento{
+    background-color: rgb(255, 255, 138);
+}
+
+
+.form .filesCard{
+    display: inline-block;
+    width: 20%;
+    height: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: .5em;
+    margin: .5em;
+    margin-bottom: 3em;
+   
+}
+
+.form .filesContainer {
+   display: flex;
+}
+
+.filesCard img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: 1em;
+}
+
+.filesCard iframe{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: 1em;
+}
