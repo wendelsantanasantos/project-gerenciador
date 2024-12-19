@@ -1,0 +1,22 @@
+.form_control{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.form_control label{
+    font-weight: bold;
+    margin-bottom: .3em;
+}
+
+.form_control select{
+    padding: .7em;
+    border: 1px solid #ccc;
+
+}
+
+.form_control select option{
+    padding: .7em;
+    border: none;
+
+}

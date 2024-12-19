@@ -1,0 +1,17 @@
+.loading_container{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100% ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(32, 32, 32, 0.521);
+
+}
+
+.loading{
+    width: 100px;
+    height: 100px;
+}

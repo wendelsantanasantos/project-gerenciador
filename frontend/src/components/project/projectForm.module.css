@@ -1,0 +1,100 @@
+.projectForm {
+    width: 95%;
+    max-width: 800px; /* Define uma largura máxima */
+    padding: 3em;
+    margin: 1em auto;
+    background-color:#203c641e;
+    border-radius: 10px;
+    color: var(--backgroundcolor2--);
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+
+    
+}
+
+.projectForm input,
+.projectForm button,
+.projectForm select {
+
+    width: 230px; 
+    flex: 1 1 ;
+    
+}
+
+.projectForm label{
+    background-color: var(--backgroundcolor--);
+    font-size: .9em;
+    font-weight: 400;
+    padding: 0.2em  .7em;
+    border-radius: .3em;
+}
+
+.projectForm select{
+    border-radius: 10px;
+    appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+}
+
+select option {
+
+    color: #3d3b3b; /* Cor do texto */
+    padding: 5px;
+    font-size: 16px;
+    
+}
+
+
+.teamContainer{
+    background-color: rgba(240, 248, 255, 0.123);
+    width: 230px;
+    box-sizing: border-box;
+    height: 200px;
+}
+
+.resultsList{
+    box-sizing: border-box;
+    margin-top: -.5em;
+}
+
+.resultsList p {
+    background-color: var(--backgroundcolor2--);
+    text-align: center;
+    font-size: .8em;
+    font-weight: 400;
+    border-bottom: 1px solid var(--backgroundcolor--);
+    padding: .5em  .7em;
+    margin-bottom: .5em;
+    transition: .2s ease-in-out;
+    
+}
+
+.resultsList p:hover{
+    background-color: var(--blueDark--) !important;
+    color: var(--backgroundcolor2--);
+}
+
+.dataContainer{
+    max-height:200px;
+
+}
+
+.projectForm button{
+    margin-top: 1.5em;
+    padding: 1em;
+}
+
+.projectFormSubmit{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+/* Para telas menores */
+@media (max-width: 768px) {
+    .projectForm {
+        flex-direction: column; /* Organiza os itens em uma coluna */
+    }
+
+}

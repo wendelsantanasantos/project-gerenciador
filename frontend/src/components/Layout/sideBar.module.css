@@ -1,0 +1,94 @@
+.sidebar   {
+    background-color:var(--blueDark--);
+    width: 150px;
+    height: 100% !important;
+    position: fixed;
+    z-index: 6 !important;
+    left: 0;
+    top: 0p;
+    padding-top: 1em;
+    transition: .5s ease-in-out;
+}
+
+.sidebarOpen{
+   width: 300px;
+}
+
+.sidebarClose ul li p{
+    opacity: 0;
+    margin-left: -2.5em;
+}
+
+
+.logoContainer{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logoContainer img{
+
+    margin-left: 1em;
+    margin-top: 2em;
+}
+
+.menuIcon{
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+
+.logoContainer svg{
+    margin-right: .1em;
+    position: static;
+    margin-left: .5em;
+    font-size: 2.5em;
+    color: var(--textColor--);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+.logoContainer  .iconRotate{
+    transform: rotate(90deg);
+}
+
+.sidebar ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top:1em ;
+}
+
+.sidebar ul li{
+    padding: .5em;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li span{
+    margin-right: .3em;
+    margin-left: .3em;
+    font-size: 1.5em;
+    padding: .3em;
+}
+
+.sidebar ul li:hover{
+    background-color: var(--textColor--) !important;
+    color: rgb(18, 122, 122);
+    border-bottom: 1px solid #fff;
+}
+
+.sidebar ul li a{
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li p{
+    display: flex;
+    transition: .4s ease-in-out;
+}
+
+ 
