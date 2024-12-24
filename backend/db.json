@@ -289,6 +289,27 @@
       "status": "Em andamento",
       "team": [],
       "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+    },
+    {
+      "name": "teste-membro",
+      "budget": "20000",
+      "category": {
+        "id": "1",
+        "name": "Desenvolvimento"
+      },
+      "description": "descarte",
+      "start_date": "2024-12-17",
+      "end_date": "2024-12-26",
+      "members": [
+        "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
+        "b34612df-e878-40d9-81bb-4767b104d44e"
+      ],
+      "cost": 0,
+      "tasks": [],
+      "services": [],
+      "id": "777efec0-758a-446e-8451-27cf1ff45804",
+      "status": "Em andamento",
+      "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
     }
   ],
   "categories": [

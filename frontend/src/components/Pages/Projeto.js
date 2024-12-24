@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid'
 import { useState, useEffect } from "react";
 import Loading from "../Layout/Loading";
-import Container from "../Layout/Container";
 import ProjectForm from '../project/projectForm';
 import ServiceForm from "../services/ServiceForm";
 import ServiceCard from "../services/serviceCard";
 import TasksForm from '../tasks/tasksForm';
 import Tasks from '../tasks/tasks';
 import Mensagem from "../Layout/Mensagem";
+import { VscAccount } from "react-icons/vsc";
 
 function Projeto() {
 
@@ -17,6 +17,7 @@ function Projeto() {
     const [project, setProject] = useState([])
     const [services, setServices] = useState([])
     const [tasks, setTasks] = useState([])
+    const [members, setMembers] = useState([])
     const [showProjectForm, setShowProjectForm] = useState(false)
     const [showServiceForm, setShowServiceForm] = useState(false)
     const [showTaskForm, setShowTaskForm] = useState(false)
@@ -85,6 +86,7 @@ function Projeto() {
                     setProject(data);
                     setServices(data.services || []); 
                     setTasks(data.tasks || [])
+                    teamMembers(data.id)
                 })
                 .catch((erro) => {
                     console.error(erro.message);
@@ -232,6 +234,26 @@ function Projeto() {
                 setType('error');
             });
         }
+
+        function teamMembers(id) {
+            setMsg('');
+        
+            fetch(`http://localhost:5000/projects/${id}/members`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                setMembers(data);
+            })
+            .catch((error) => {
+                console.error(error);
+                setMsg('Erro ao carregar membros do projeto!');
+                setType('error');
+            });
+        }
         
     
 
@@ -337,7 +359,25 @@ function Projeto() {
                 </div>
       
         
-                    <p>Equipe</p>
+                <h2>
+                    Equipe
+                </h2>
+
+                <div className={styles.members_container}>
+                    {members.length > 0 && (
+                        members.map((member) => (
+                            <div className={styles.member} key={member.id}>
+                                
+                                
+                                <span className={styles.hide}>{member.id}</span>
+
+                                <h3><VscAccount />{member.name}</h3>
+                                <p>{member.email}</p>
+                            </div>
+                        ))
+                    )}
+                    {project.members.length === 0 && <p>Não há membros cadastrados</p>}
+                </div>
             
         </div>
     ) : (<Loading />)}</>

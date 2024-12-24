@@ -32,7 +32,6 @@ function MeusProjetos() {
           if (data) {
             // Verifica se data não é null
             setProjects(data);
-            console.log(data);
           }
           setRemoveLoading(true);
         })
@@ -65,7 +64,6 @@ function MeusProjetos() {
   if (location.state) {
     mensagem = location.state.mensagem;
     type = location.state.type;
-    console.log(mensagem, type);
   }
   return (
     <>

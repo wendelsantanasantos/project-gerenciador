@@ -250,7 +250,6 @@ app.post("/projects", authMiddleware, async (req, res) => {
   const id = uuidv4();
   newProject.id = id;
   newProject.status = "Em andamento";
-  newProject.team = [];
 
   const user = req.usuario;
 
@@ -433,6 +432,7 @@ app.delete("/projects/:id/services/:serviceId", async (req, res) => {
     res.status(500).json("Erro ao remover o serviço");
   }
 });
+
 app.post('/projects/:id/tasks', upload.array('file'), async (req, res) => {
   const { id } = req.params;
   const newTask = req.body;
@@ -528,6 +528,30 @@ app.get("/usersSearch", async (req, res) => {
   } catch (err) {
     console.error("Erro ao ler o arquivo db.json:", err);
     res.status(500).json("Erro ao ler o arquivo db.json");
+  }
+});
+
+app.get("/projects/:id/members", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const data = await fs.readFile(dbPath, "utf-8");
+    const db = JSON.parse(data);
+
+    const project = db.projects.find((p) => p.id === id);
+    if (!project) {
+      return res.status(404).json("Projeto não encontrado");
+    }
+    const memberDetails = project.members.map(memberId => {
+      return db.users.find(user => user.id === memberId);
+    });
+
+    console.log(memberDetails);
+
+    res.status(200).json(memberDetails); // Retorna os detalhes dos membros
+  } catch (err) {
+    console.error("Erro ao processar a requisição:", err);
+    res.status(500).json({ message: "Erro ao processar a requisição", error: err.message });
   }
 });
 

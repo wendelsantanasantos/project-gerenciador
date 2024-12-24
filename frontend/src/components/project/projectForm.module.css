@@ -50,16 +50,12 @@ select option {
     background-color: rgba(240, 248, 255, 0.123);
     width: 230px;
     box-sizing: border-box;
-    height: 200px;
+    height: 250px;
 }
 
-.resultsList{
-    box-sizing: border-box;
-    margin-top: -.5em;
-}
-
-.resultsList p {
+.resultsList {
     background-color: var(--backgroundcolor2--);
+    box-sizing: border-box;
     text-align: center;
     font-size: .8em;
     font-weight: 400;
@@ -67,13 +63,33 @@ select option {
     padding: .5em  .7em;
     margin-bottom: .5em;
     transition: .2s ease-in-out;
-    
 }
 
-.resultsList p:hover{
-    background-color: var(--blueDark--) !important;
-    color: var(--backgroundcolor2--);
+.resultsList p{
+    margin-bottom: -.5em !important;
 }
+
+.resultsList span{
+    color: #3d3b3b  !important;
+    font-size: .7em;
+}
+.resultsList:hover{
+    background-color: var(--blueDark--) !important;
+}
+.resultsList:hover p,
+.resultsList:hover span{
+    color: var(--backgroundcolor2--) !important;
+}
+
+.memberAdded p{
+    background-color: var(--blueDark--) !important;
+    color: var(--backgroundcolor2--) !important;
+}
+
+.memberAdded span{
+    color: var(--backgroundcolor2--) !important;
+}
+
 
 .dataContainer{
     max-height:200px;
