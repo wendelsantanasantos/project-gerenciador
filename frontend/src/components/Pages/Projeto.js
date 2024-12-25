@@ -371,7 +371,12 @@ function Projeto() {
                                 
                                 <span className={styles.hide}>{member.id}</span>
 
-                                <h3><VscAccount />{member.name}</h3>
+                                <div className={styles.memberHeader}>
+                                    <div className={styles.avatar_imgContainer}>
+                                    {member.img ? <img src={`http://localhost:5000${member.img}`} alt={member.name} /> : <VscAccount /> }
+                                    </div>
+                                    <h3>{member.name}</h3>
+                                </div>
                                 <p>{member.email}</p>
                             </div>
                         ))

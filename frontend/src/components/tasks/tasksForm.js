@@ -18,10 +18,8 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
             projectData.tasks = [];
         }
 
-        // Cria um novo objeto FormData
         const formData = new FormData();
 
-        // Adiciona todos os dados da tarefa no FormData
         for (const key in task) {
             formData.append(key, task[key]);
         }

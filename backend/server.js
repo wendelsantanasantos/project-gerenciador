@@ -11,8 +11,8 @@ const multer = require("multer");
 const app = express();
 const port = 5000;
 
-app.use(express.json()); // Middleware para lidar com JSON no corpo das requisições
-app.use('./uploads', express.static(path.join('backend', 'uploads')));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true })); // CORS para o frontend
 app.use(cookieParser());
@@ -101,13 +101,22 @@ function generateToken(userId) {
   return jwt.sign({ id: userId }, secretKey, { expiresIn: "10h" });
 }
 
-app.post("/CadastroUser", async (req, res) => {
+
+app.post("/CadastroUser", upload.single("imgPerson"), async (req, res) => {
   try {
     const newUser = req.body;
     const id = uuidv4();
     newUser.id = id;
 
-    // Lendo o arquivo db.json com fs.promises.readFile
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      return res.status(400).json({ message: "Preencha todos os campos obrigatórios." });
+    }
+
+    if (req.file) {
+      newUser.img = `/uploads/${req.file.filename}`;
+    }
+
+    // Leitura e escrita no db.json
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
 
@@ -115,41 +124,31 @@ app.post("/CadastroUser", async (req, res) => {
       db.users = [];
     }
 
-    // Criptografando a senha
-
-    const senhaCriptografada = await criptografarSenha(newUser.password);
-
+    // Criptografia de senha
+    const senhaCriptografada = await bcrypt.hash(newUser.password, 10);
     newUser.password = senhaCriptografada;
 
-    // Adicionando o novo usuário
     db.users.push(newUser);
 
-    // Salvando os dados no arquivo db.json com fs.promises.writeFile
+    // Salvando no db.json
     await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
 
-    // Gerando o token para o novo usuário
-    const token = generateToken(newUser.id);
+    const token = jwt.sign({ id: newUser.id }, secretKey, { expiresIn: "10h" });
 
-    // Setando o cookie com o token
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // Alterar para true em produção com HTTPS
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      path: "/",
-      maxAge: 36000000, // Tempo de expiração do cookie
+      maxAge: 3600000, 
     });
 
-    console.log("Cookie token setado com sucesso;");
-    res.status(200).json({ message: "Usuário logado com sucesso" });
-
-    res.status(200).json(newUser);
+    res.status(200).json({ message: "Cadastro realizado com sucesso!", newUser });
   } catch (err) {
     console.error("Erro ao processar a requisição:", err);
-    res
-      .status(500)
-      .json({ message: "Erro ao processar a requisição", error: err.message });
+    res.status(500).json({ message: "Erro ao processar a requisição", error: err.message });
   }
 });
+
 
 // Função para criptografar senha
 async function criptografarSenha(senha) {
@@ -522,9 +521,9 @@ app.get("/usersSearch", async (req, res) => {
       return res.status(404).json("Nenhum usuário encontrado");
     }
 
-    const limitResults =filteredUsers.slice(0, 10);
+    const limitResults =filteredUsers.slice(0,3);
 
-    res.status(200).json(limitResults); // Retorna todos os usuários que correspondem
+    res.status(200).json(limitResults); 
   } catch (err) {
     console.error("Erro ao ler o arquivo db.json:", err);
     res.status(500).json("Erro ao ler o arquivo db.json");

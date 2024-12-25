@@ -172,9 +172,16 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
             className={`${style.resultsList} ${members.includes(user.id) ? style.memberAdded : ''}`}
             onClick={() => toggleMember(user.id)}
         >
-                <p>
-                <VscAccount />  {user.name}
-                </p>
+                <div className={style.userHeader}>
+                    
+                    <div className={style.avatarContainer}>
+                    {user.img ? <img src={`http://localhost:5000${user.img}`} alt={user.name} /> : <VscAccount /> }
+                    </div>
+
+                    <p>
+                    {user.name}
+                    </p>
+                </div>
                 <span>{user.email}</span>
 
             </div>

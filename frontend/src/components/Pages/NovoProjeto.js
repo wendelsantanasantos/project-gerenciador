@@ -14,7 +14,7 @@ function NovoProjeto() {
 
 
         // Enviando a requisição POST para o backend
-        fetch('http://localhost:5000/projects', { // Corrigido para '/projects'
+        fetch('http://localhost:5000/projects', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,8 +36,6 @@ function NovoProjeto() {
     return (
         <div className={style.newproject_container}>
             
-
-       
             <div className={style.imgContainer}><img src={Imagen} alt="" /></div>
 
             <ProjectForm handleSubmit={criarPost} btnText="Criar projeto" />

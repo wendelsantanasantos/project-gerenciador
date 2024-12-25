@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import Input from "../formComponents/input";
 import SubmitBtn from "../formComponents/submit";
 import { useState } from "react";
+import { BsPersonPlusFill } from "react-icons/bs";
 
-function CadastroUser({ handleSubmit, btnText, userData }) {
+
+function CadastroUser({ userData }) {
+
   const [user, setUser] = useState(
-    userData || { name: "", email: "", password: "" }
+    userData || { name: "", email: "", password: "", imgPerson: "" }
   );
   const [msg, setMsg] = useState("");
+  const [imgPerson, setImgPerson] = useState("");
 
   function Submit(e) {
     e.preventDefault();
@@ -17,12 +21,19 @@ function CadastroUser({ handleSubmit, btnText, userData }) {
       setMsg("Preencha todos os campos");
       return;
     }
+
+    const formData = new FormData();
+    formData.append("name", user.name);
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    
+    if(imgPerson){
+      formData.append("imgPerson", imgPerson);
+    }
+
     fetch("http://localhost:5000/CadastroUser", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+      body: formData,
       credentials: "include",
     })
       .then((resp) => resp.json())
@@ -42,8 +53,29 @@ function CadastroUser({ handleSubmit, btnText, userData }) {
 
   return (
     <div className={styles.CadastroUser}>
-      <h1>Cadastrar Usuário</h1>
-      <form onSubmit={Submit}>
+      <form onSubmit={Submit}  encType="multipart/form-data">
+
+
+      <div className={styles.imgPerson_container} onChange={(e) => setImgPerson(e.target.files[0])}>
+        <input
+              type="file"
+              name="imgPerson"
+              accept="image/*"
+               id="imgPerson"
+               className={styles.imgPerson}
+          />
+          <label htmlFor="imgPerson" className={styles.imgPerson_label}>
+
+            {imgPerson ? <img src={URL.createObjectURL(imgPerson)} alt="Imagem de perfil" /> :
+            <BsPersonPlusFill size={32} />
+            }
+                
+          </label>
+      </div>
+
+
+
+
         <Input
           type="text"
           text="Nome"

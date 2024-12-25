@@ -310,6 +310,27 @@
       "id": "777efec0-758a-446e-8451-27cf1ff45804",
       "status": "Em andamento",
       "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+    },
+    {
+      "name": "teste-imagem",
+      "budget": "2000",
+      "category": {
+        "id": "2",
+        "name": "Design"
+      },
+      "start_date": "2024-12-23",
+      "end_date": "2024-12-27",
+      "description": "descarte",
+      "members": [
+        "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
+        "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
+      ],
+      "cost": 0,
+      "tasks": [],
+      "services": [],
+      "id": "5da991f2-bc5f-4b23-9382-8d6caba5e206",
+      "status": "Em andamento",
+      "userId": "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
     }
   ],
   "categories": [
@@ -355,6 +376,13 @@
       "password": "$2b$10$DeOyJNt9wn8ez0tM/DuVtO3eXnVb2IPXBwhgy9PT8YTzGjY5Od1Ui",
       "id": "b34612df-e878-40d9-81bb-4767b104d44e",
       "team": []
+    },
+    {
+      "name": "castanha4",
+      "email": "castanha4@gmail.com",
+      "password": "$2b$10$PX.CYSx38kEhB7OCn6qHgeJhmg8CPvyjjOXV3Aj5IuI9cNbz11x56",
+      "id": "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
+      "img": "/uploads/1735082811363-71OVG4WzWxL._AC_UF894,1000_QL80_.jpg"
     }
   ]
 }
