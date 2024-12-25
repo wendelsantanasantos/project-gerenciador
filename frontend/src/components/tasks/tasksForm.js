@@ -1,6 +1,8 @@
 import styles from './tasksForm.module.css'
 import Input from '../formComponents/input'
 import SubmitBtn from '../formComponents/submit'
+import SearchBar from '../Layout/searchBar';
+import { VscAccount } from "react-icons/vsc";
 
 import { IoShareOutline } from "react-icons/io5";
 import { useState } from 'react'
@@ -9,6 +11,10 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
 
     const [task, setTask] = useState({});
     const [file, setFile] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [members, setMembers] = useState([]); 
+
 
 
     const submit = (e) => {
@@ -57,6 +63,42 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
         return file && file.type.startsWith("image/");
     };
 
+    function searchUsers(e) {
+        const query = e.target.value;
+
+        if (!query.trim()) {
+            setFilteredUsers([]); // Limpa os resultados
+            setSearchQuery(''); // Limpa o termo de pesquisa
+            return; // Retorna para não fazer a requisição
+        }
+
+        setSearchQuery(query);
+
+        fetch(`http://localhost:5000/usersSearch?UserName=${query}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                setFilteredUsers(data);
+            })
+            .catch((erro) => console.log(erro));
+    }
+
+    const toggleMember = (userId) => {
+    
+        setMembers((prevMembers) => {
+            if (prevMembers.includes(userId)) {
+                return prevMembers.filter((id) => id !== userId);
+            } else {
+                return [...prevMembers, userId];
+            }
+        });
+    };
+
     return (
         <form onSubmit={submit} className={styles.form}>
             <Input type="text" text="Nome da tarefa" name="name" placeholder="Insira o nome da tarefa" handleOnChange={handleChange} />
@@ -67,6 +109,36 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
 
             <Input type="text" text="Descrição da tarefa" name="descricao" placeholder="Insira a descrição da tarefa" handleOnChange={handleChange} />
             <Input type="text" text="Status da tarefa" name="status" placeholder="Insira o status da tarefa" handleOnChange={handleChange} />
+
+            <div className={styles.teamContainer}>
+    <div className={styles.searchBarContainer}>
+        <SearchBar handleSearch={searchUsers} />
+        {Array.isArray(filteredUsers) && filteredUsers.length > 0 ? (
+            filteredUsers.map((user) => (
+
+            <div  key={user.id}
+            className={`${styles.resultsList} ${members.includes(user.id) ? styles.memberAdded : ''}`}
+            onClick={() => toggleMember(user.id)}
+        >
+                <div className={styles.userHeader}>
+                    
+                    <div className={styles.avatarContainer}>
+                    {user.img ? <img src={`http://localhost:5000${user.img}`} alt={user.name} /> : <VscAccount /> }
+                    </div>
+
+                    <p>
+                    {user.name}
+                    </p>
+                </div>
+                <span>{user.email}</span>
+
+            </div>
+            ))
+        ) : (
+            <p className={styles.noResults}></p>
+        )}
+    </div>
+                </div>
             
             <input type="file" name="arquivo" multiple onChange={handleChange} id="arquivo" />
     

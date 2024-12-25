@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import Input from "../formComponents/input";
 import SubmitBtn from "../formComponents/submit";
 import { useState } from "react";
+import { BsEyeFill } from "react-icons/bs";
+import { BsEyeSlashFill } from "react-icons/bs";
 
 function Login({ handleSubmit, btnText, userData }) {
   const [user, setUser] = useState(userData || { email: "", password: "" });
   const [msg, setMsg] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   function Submit(e) {
     e.preventDefault();
   
@@ -24,13 +27,12 @@ function Login({ handleSubmit, btnText, userData }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
-      credentials: "include", // Enviar cookies, se necessário
+      credentials: "include", 
     })
       .then((resp) => {
         if (resp.ok) {
-          return resp.json(); // Retorna a resposta como JSON
+          return resp.json(); 
         } else if (resp.status === 401) {
-          // Erro de login, senha ou e-mail incorretos
           return resp.json().then((data) => {
             setMsg(data.message || "Erro ao realizar login, E-mail ou senha incorretos!");
             throw new Error(data.message || "E-mail ou senha incorretos");
@@ -57,6 +59,11 @@ function Login({ handleSubmit, btnText, userData }) {
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
+  function togglePasswordVisibility(e) {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  }
+
   return (
     <div className={styles.login}>
       <h1>Login</h1>
@@ -69,13 +76,21 @@ function Login({ handleSubmit, btnText, userData }) {
           handleOnChange={handleChange}
         />
 
-        <Input
-          type="password"
-          text="Senha"
-          name="password"
-          placeholder="Insira a senha"
-          handleOnChange={handleChange}
-        />
+    <div className={styles.showPassword}>
+      
+      <Input
+        type={showPassword ? "text" : "password"}
+        text="Senha"
+        name="password"
+        placeholder="Insira a senha"
+        handleOnChange={handleChange}
+      />
+      <div className={styles.eye} onClick={togglePasswordVisibility}>
+      {showPassword ? <BsEyeFill /> : <BsEyeSlashFill />}
+    </div>
+
+    </div>
+
 
         <SubmitBtn text="Entrar" />
       </form>

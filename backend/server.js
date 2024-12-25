@@ -149,14 +149,6 @@ app.post("/CadastroUser", upload.single("imgPerson"), async (req, res) => {
   }
 });
 
-
-// Função para criptografar senha
-async function criptografarSenha(senha) {
-  const saltRounds = 10;
-  const hash = await bcrypt.hash(senha, saltRounds);
-  return hash;
-}
-
 //Login
 app.post("/Login", async (req, res) => {
   try {

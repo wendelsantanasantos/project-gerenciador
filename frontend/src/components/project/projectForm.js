@@ -11,7 +11,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
     const [project, setProject] = useState(projectData || { name: '', budget: 0, category: { id: '', name: '' } });
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const [members, setMembers] = useState([]);  // Corrigido para 'members' para manter a consistência
+    const [members, setMembers] = useState([]); 
 
     useEffect(() => {
         // Fetch categories from the server
@@ -190,7 +190,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
             <p className={style.noResults}></p>
         )}
     </div>
-</div>
+                </div>
 
 
                 <div className={style.projectFormSubmit}>

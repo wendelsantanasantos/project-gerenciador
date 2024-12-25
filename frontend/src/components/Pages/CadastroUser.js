@@ -4,6 +4,8 @@ import Input from "../formComponents/input";
 import SubmitBtn from "../formComponents/submit";
 import { useState } from "react";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { BsEyeFill } from "react-icons/bs";
+import { BsEyeSlashFill } from "react-icons/bs";
 
 
 function CadastroUser({ userData }) {
@@ -13,6 +15,7 @@ function CadastroUser({ userData }) {
   );
   const [msg, setMsg] = useState("");
   const [imgPerson, setImgPerson] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   function Submit(e) {
     e.preventDefault();
@@ -49,6 +52,11 @@ function CadastroUser({ userData }) {
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
+  }
+
+  function togglePasswordVisibility(e) {
+    e.preventDefault();
+    setShowPassword(!showPassword);
   }
 
   return (
@@ -91,13 +99,20 @@ function CadastroUser({ userData }) {
           handleOnChange={handleChange}
         />
 
-        <Input
-          type="password"
-          text="Senha"
-          name="password"
-          placeholder="Insira a senha"
-          handleOnChange={handleChange}
-        />
+    <div className={styles.showPassword}>
+      
+      <Input
+        type={showPassword ? "text" : "password"}
+        text="Senha"
+        name="password"
+        placeholder="Insira a senha"
+        handleOnChange={handleChange}
+      />
+      <div className={styles.eye} onClick={togglePasswordVisibility}>
+      {showPassword ? <BsEyeFill /> : <BsEyeSlashFill />}
+    </div>
+
+    </div>
 
         <SubmitBtn text="Cadastrar" />
       </form>

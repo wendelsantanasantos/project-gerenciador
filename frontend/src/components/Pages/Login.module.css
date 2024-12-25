@@ -39,3 +39,33 @@
     background-color: var(--backgroundcolor--);
     padding: .2em .7em ;
   }
+
+  .showPassword {
+   position: relative;
+   width: 100%;
+   margin-bottom:1em ;
+
+ }
+ 
+ .eye {
+   position: absolute;
+   top: 35px;
+   right: 10px; 
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #888;
+  
+ }
+
+ .eye svg {
+   user-select: none;
+   padding: 5px;
+   font-size:2em ;
+ }
+ 
+ .eye:hover {
+   color: #555;
+ }
+ 

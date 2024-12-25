@@ -27,6 +27,8 @@ function ServiceForm({handleSubmit, btnText, projectData}) {
 
             <Input type="text" text="Descrição do serviço" name="description" placeholder="Insira a descrição do serviço" handleOnChange={handleChange} />
 
+            <Input type='date' text="Data do serviço" name="date" placeholder="Insira a data do serviço" handleOnChange={handleChange} />
+
             <SubmitBtn text={btnText} />
         </form>
     )
