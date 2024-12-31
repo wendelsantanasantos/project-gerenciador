@@ -6,6 +6,7 @@
     margin: .5em;
     padding: .5em;
     background-color: var(--backgroundcolor2--);
+    cursor: pointer;
 }
 
 .projectCard_status{

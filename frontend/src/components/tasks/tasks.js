@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './tasks.module.css';
 import { BsFillTrashFill } from 'react-icons/bs';
 
-function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis,taskStatus, files = [], handleRemove }) {
+function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, status, files = [], handleRemove }) {
     const backendUrl = "http://localhost:5000"; // URL base do backend
 
     const [showFiles, setShowFiles] = useState(false); // Estado para controlar a visibilidade dos arquivos
@@ -12,20 +12,13 @@ function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis,task
         handleRemove(id, cost);
     }
 
-    // Função para verificar se o arquivo é uma imagem pelo nome/extensão
     function isImage(fileName) {
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
         return imageExtensions.some(ext => fileName.toLowerCase().endsWith(ext));
     }
-
-    // Função para extrair o nome do arquivo
     function getFileName(filePath) {
-        // Extrai apenas o nome do arquivo, descartando o caminho
-         // eslint-disable-next-line
         return filePath.replace(/^.*[\\\/]/, '');
     }
-
-    // Função para alternar a visibilidade dos arquivos
     const toggleFilesVisibility = () => {
         setShowFiles(!showFiles);
     };
@@ -34,7 +27,10 @@ function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis,task
         <div className={styles.Task}>
             <div className={styles.taskHeader}>
                 <h4>{name}</h4>
-                <div className={styles.statusTask}><span>{taskStatus || 'pendente'}</span></div>
+                <div className={styles.statusTask}>
+                    <p><span>Status:</span>{status}</p>
+                </div>
+
                  <p><span>Prioridade:</span>{prioridade}</p>
             </div>
 

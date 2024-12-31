@@ -303,6 +303,7 @@ function Projeto() {
                             descricao={task.descricao}
                             prioridade={task.prioridade}
                             prazo={task.prazo}
+                            status={task.status}
                             files={task.files}
                             responsaveis={task.responsaveis}
                             key={task.id}

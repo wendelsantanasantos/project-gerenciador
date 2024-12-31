@@ -3,13 +3,15 @@ import Input from '../formComponents/input'
 import SubmitBtn from '../formComponents/submit'
 import SearchBar from '../Layout/searchBar';
 import { VscAccount } from "react-icons/vsc";
+import Select from "../formComponents/select";
+
 
 import { IoShareOutline } from "react-icons/io5";
 import { useState } from 'react'
 
 function TasksForm({ handleSubmit, btnText, projectData }) {
 
-    const [task, setTask] = useState({});
+    const [task, setTask] = useState({prioridade  : ''});
     const [file, setFile] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -102,13 +104,35 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
     return (
         <form onSubmit={submit} className={styles.form}>
             <Input type="text" text="Nome da tarefa" name="name" placeholder="Insira o nome da tarefa" handleOnChange={handleChange} />
-            <Input type="text" text="Prioridade da tarefa" name="prioridade" placeholder="Insira a prioridade da tarefa" handleOnChange={handleChange} />
+            
+            <Select
+                text="Prioridade da tarefa"
+                name="prioridade"
+                handleOnChange={handleChange}
+                options={[
+                    { id: 'Baixa', name: 'Baixa' },
+                    { id: 'Media', name: 'Media' },
+                    { id: 'Alta', name: 'Alta' },
+                ]}
+                value={task.prioridade}
+            />
+
             <Input type="date" text="Prazo da tarefa" name="prazo" placeholder="Insira o prazo da tarefa" handleOnChange={handleChange} />
             <Input type="number" text="Custo da tarefa" name="cost" placeholder="Insira o custo da tarefa" handleOnChange={handleChange} />
            
 
             <Input type="text" text="Descrição da tarefa" name="descricao" placeholder="Insira a descrição da tarefa" handleOnChange={handleChange} />
-            <Input type="text" text="Status da tarefa" name="status" placeholder="Insira o status da tarefa" handleOnChange={handleChange} />
+
+            <Select 
+                text='Status da tarefa'
+                name='status'
+                handleOnChange={handleChange}
+                options={[
+                    {id: 'Pendente', name: 'Pendente'},
+                    {id: 'Em andamento', name: 'Em andamento'},
+                    {id: 'Concluida', name: 'Concluida'},
+                ]}
+                value={task.status}/>
 
             <div className={styles.teamContainer}>
     <div className={styles.searchBarContainer}>
