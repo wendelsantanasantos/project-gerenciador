@@ -20,6 +20,27 @@
       "id": "9ac86387-664a-4cce-b7b5-50074d376232",
       "status": "Em andamento",
       "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+    },
+    {
+      "name": "teste",
+      "budget": "10000",
+      "category": {
+        "id": "2",
+        "name": "Design"
+      },
+      "description": "descarte",
+      "start_date": "2024-12-23",
+      "end_date": "2024-12-31",
+      "members": [
+        "270f8d52-5384-4ac0-8219-e38a89c4b402",
+        "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
+      ],
+      "cost": 0,
+      "tasks": [],
+      "services": [],
+      "id": "5412141d-e414-4e78-8f05-23e93118ffd7",
+      "status": "Em andamento",
+      "userId": "270f8d52-5384-4ac0-8219-e38a89c4b402"
     }
   ],
   "categories": [
@@ -58,6 +79,13 @@
       "password": "$2b$10$PX.CYSx38kEhB7OCn6qHgeJhmg8CPvyjjOXV3Aj5IuI9cNbz11x56",
       "id": "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
       "img": "/uploads/1735082811363-71OVG4WzWxL._AC_UF894,1000_QL80_.jpg"
+    },
+    {
+      "name": "creatina",
+      "email": "creatina1@gmail.com",
+      "password": "$2b$10$DV3WkwumonuBwpDTC0sZSe911SAdyqkE887W7Ve8KcASFjK/nFsK6",
+      "id": "270f8d52-5384-4ac0-8219-e38a89c4b402",
+      "img": "/uploads/1735506207833-creatina-probiotica-energia-muscular-recuperacao.webp"
     }
   ]
 }

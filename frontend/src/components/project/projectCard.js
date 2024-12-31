@@ -53,7 +53,7 @@ function ProjectCard({
         
       <ProgressBar
       
-        completed={status === "Concluido" ? 100 : 50}
+        completed={status === "Concluido" ? 100 : 70}
         customLabel={status === "Concluido" ? "Concluido!" : ""}
         bgColor="#222"
         baseBgColor="#cadfe2"
