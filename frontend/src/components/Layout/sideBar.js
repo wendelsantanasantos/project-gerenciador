@@ -3,11 +3,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { PiListBold } from "react-icons/pi";
-
+import { RiTeamFill } from "react-icons/ri";
 import { IoMdHome } from "react-icons/io";
 import { BsFileEarmarkTextFill } from "react-icons/bs";
 import { BsBriefcaseFill } from "react-icons/bs";
-import { BsFileEarmarkPlus } from "react-icons/bs";
 import { BsBoxes } from "react-icons/bs";
 import { TbMessage } from "react-icons/tb";
 
@@ -47,11 +46,15 @@ function SideBar() {
             <span><BsFileEarmarkTextFill /></span><p>My Projects</p></Link>
           </li>
           <li>
+            <Link to="/ProjetosEquipe">
+            <span><RiTeamFill /></span><p>Collaborators</p></Link>
+          </li>
+          <li>
             <Link to="/Empresa">
              <span>  <BsBriefcaseFill /></span><p>Company</p></Link>
           </li>
           <li>
-            <Link to="/novoProjeto">
+            <Link to="/NovoProjeto">
               <span><BsBoxes /></span>
             <p>New Project</p></Link>
           </li>

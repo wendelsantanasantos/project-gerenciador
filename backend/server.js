@@ -45,10 +45,10 @@ const dbPath = path.resolve("db.json");
 
 // Middleware global para verificar e passar informações do usuário
 app.use(async (req, res, next) => {
+
   try {
     const token = req.cookies.token;
 
-    // Se houver um token, tentamos verificar e recuperar as informações do usuário
     if (token) {
       const decoded = jwt.verify(token, secretKey);
       req.userId = decoded.id;
@@ -58,7 +58,10 @@ app.use(async (req, res, next) => {
       const db = JSON.parse(data);
 
       const usuario = await db.users.find((user) => user.id === req.userId);
+
       req.usuario = usuario;
+
+      console.log("Usário autenticado com sucesso! ID:", req.userId);
     } else {
       req.usuario = null;
     }
@@ -214,14 +217,37 @@ app.get("/projects", authMiddleware, async (req, res) => {
       ? db.projects.filter((project) => project.userId === userId)
       : [];
 
-    console.log("Projetos encontrados:", projects);
+    console.log("Projetos encontrados:", projects.length);
 
-    res.json(projects); // Retorna os projetos
+    res.json(projects);
   } catch (err) {
     console.error("Erro ao ler o arquivo db.json:", err);
     res.status(500).json("Erro ao ler o arquivo db.json");
   }
 });
+
+// Rota para obter os projetos compartilhados
+app.get("/projects/team", authMiddleware, async (req, res) => {
+  try {
+    const data = await fs.readFile(dbPath, "utf-8");
+    const db = JSON.parse(data);
+    const user = req.usuario;
+
+    const userId = user.id;
+    console.log("Usuário que vai buscar os projetos:", userId);
+
+    const projects = db.projects
+      ? db.projects.filter((project) => project.members.includes(userId) && project.userId )
+      : [];
+
+    console.log("Projetos encontrados:", projects);
+
+    res.json(projects);
+  } catch (err) {
+    console.error("Erro ao ler o arquivo db.json:", err);
+    res.status(500).json("Erro ao ler o arquivo db.json");
+  }
+})
 
 // Rota para obter todas as categorias
 app.get("/categories",authMiddleware, async (req, res) => {
@@ -271,17 +297,30 @@ app.post("/projects", authMiddleware, async (req, res) => {
 });
 
 // Busca um projeto pelo ID
-app.get("/projects/:id", async (req, res) => {
+app.get("/projects/:id",authMiddleware, async (req, res) => {
   const { id } = req.params;
+  
+  const user = req.usuario;
+  const userId = user.id;
+  let isAdm = false;
 
   try {
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
-    const project = db.projects.find((project) => project.id === id);
+    const projectfind = db.projects.find((project) => project.id === id);
 
-    if (!project) {
+    if (!projectfind) {
       return res.status(404).json("Projeto não encontrado");
     }
+
+    if (userId ===  projectfind.userId) {
+       isAdm = true;
+    }
+
+    const project = {
+      ...projectfind,
+      isAdm
+    };
 
     res.status(200).json(project);
   } catch (err) {

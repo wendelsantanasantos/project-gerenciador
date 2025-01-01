@@ -1,57 +1,40 @@
 {
   "projects": [
     {
-      "name": "teste-1",
-      "budget": "10000",
+      "name": "sistema integrado c++",
+      "budget": "100000",
       "category": {
-        "id": "1",
-        "name": "Desenvolvimento"
+        "id": "5",
+        "name": "Planejamento"
       },
-      "description": "apenas-teste",
-      "start_date": "2024-12-25",
-      "end_date": "2024-12-28",
+      "start_date": "2024-12-24",
+      "end_date": "2025-01-11",
+      "description": "projeto para venda de metafetamina ",
       "members": [
         "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
-        "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+        "270f8d52-5384-4ac0-8219-e38a89c4b402"
       ],
       "cost": 0,
       "tasks": [
         {
-          "prioridade": "Media",
-          "name": "teste1",
-          "prazo": "2025-01-03",
-          "cost": "20000",
-          "descricao": "descarte",
-          "status": "Em andamento",
-          "files": [],
-          "id": "08545419-fa9a-47d2-aa36-6a7962d6bfe1"
+          "prioridade": "Baixa",
+          "name": "limpar a sala",
+          "prazo": "2025-01-01",
+          "descricao": "limpeza",
+          "status": "Pendente",
+          "members": [
+            "270f8d52-5384-4ac0-8219-e38a89c4b402"
+          ],
+          "files": [
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1735689997498-dino_strip3.png"
+          ],
+          "id": "448ae71b-bc39-44ea-885b-40bb7b376e31"
         }
       ],
       "services": [],
-      "id": "9ac86387-664a-4cce-b7b5-50074d376232",
+      "id": "e8397f0c-1fc0-4c2d-9e1a-f413c910a63f",
       "status": "Em andamento",
       "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
-    },
-    {
-      "name": "teste",
-      "budget": "10000",
-      "category": {
-        "id": "2",
-        "name": "Design"
-      },
-      "description": "descarte",
-      "start_date": "2024-12-23",
-      "end_date": "2024-12-31",
-      "members": [
-        "270f8d52-5384-4ac0-8219-e38a89c4b402",
-        "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
-      ],
-      "cost": 0,
-      "tasks": [],
-      "services": [],
-      "id": "5412141d-e414-4e78-8f05-23e93118ffd7",
-      "status": "Em andamento",
-      "userId": "270f8d52-5384-4ac0-8219-e38a89c4b402"
     }
   ],
   "categories": [

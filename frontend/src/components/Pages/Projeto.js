@@ -14,6 +14,7 @@ import { VscAccount } from "react-icons/vsc";
 function Projeto() {
 
     const {id} = useParams()
+    const [isAdm, setIsAdm] = useState(false)
     const [project, setProject] = useState([])
     const [services, setServices] = useState([])
     const [tasks, setTasks] = useState([])
@@ -75,6 +76,7 @@ function Projeto() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include'
             })
                 .then((resp) => {
                     if (!resp.ok) {
@@ -87,6 +89,7 @@ function Projeto() {
                     setServices(data.services || []); 
                     setTasks(data.tasks || [])
                     teamMembers(data.id)
+                    setIsAdm(data.isAdm)
                 })
                 .catch((erro) => {
                     console.error(erro.message);
@@ -266,7 +269,10 @@ function Projeto() {
                 <div className={styles.details_container}>
 
                     <h1>Projeto:{project.name}</h1>
-                     <button className={styles.btn} onClick={toggleProjectForm}>{!showProjectForm ? 'Editar Projeto' : 'Fechar'}</button>
+                    {isAdm  && (
+                          <button className={styles.btn} onClick={toggleProjectForm}>{!showProjectForm ? 'Editar Projeto' : 'Fechar'}</button>
+                    )}
+                   
                      
                      {!showProjectForm? (
                        <div className={styles.project_info}>
@@ -305,7 +311,7 @@ function Projeto() {
                             prazo={task.prazo}
                             status={task.status}
                             files={task.files}
-                            responsaveis={task.responsaveis}
+                            responsaveis={task.members}
                             key={task.id}
                             handleRemove={removeTask}
                             />
@@ -315,7 +321,11 @@ function Projeto() {
 
 
                 <div className={styles.services_form_container}>
-                    <button onClick={() => setShowTaskForm(!showTaskForm)} className={styles.btn}>{!showTaskForm ? 'Adicionar Tarefa' : 'Fechar'}</button>
+                   {
+                    isAdm && (
+                        <button onClick={() => setShowTaskForm(!showTaskForm)} className={styles.btn}>{!showTaskForm ? 'Adicionar Tarefa' : 'Fechar'}</button>
+                    )
+                   }
 
                     <div className={styles.project_info}>
                     {showTaskForm && (
@@ -347,8 +357,11 @@ function Projeto() {
                     {services.length === 0 && <p>Não há serviços cadastrados</p>}
                 
                 <div className={styles.services_form_container}>
-                    <button onClick={toggleServiceForm} className={styles.btn}>{!showServiceForm ? 'Adicionar Serviço' : 'Fechar'}</button>
-
+                   {
+                    isAdm && (
+                        <button onClick={toggleServiceForm} className={styles.btn}>{!showServiceForm ? 'Adicionar Serviço' : 'Fechar'}</button>
+                    )
+                   }
                     <div className={styles.project_info}>
                     {showServiceForm && (
                         <ServiceForm 

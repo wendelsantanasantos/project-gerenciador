@@ -34,18 +34,18 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
 
         console.log('dados  enviados', projectData.id);
 
-        // Adiciona os arquivos ao FormData
         file.forEach(f => formData.append('file', f));
 
-        // Faz a requisição para o backend com o FormData
+        members.forEach(member => formData.append('members[]', member));
+
         fetch(`http://localhost:5000/projects/${projectData.id}/tasks`, {
             method: 'POST',
-            body: formData,  // Envia o FormData
+            body: formData, 
         })
         .then(response => response.json())
         .then(data => {
             console.log('Tarefa criada:', data);
-            handleSubmit(data);  // Passa a tarefa de volta, se necessário
+            handleSubmit(data);  
         })
         .catch(error => {
             console.error('Erro ao criar tarefa:', error);
@@ -54,8 +54,8 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
 
     function handleChange(e) {
         if (e.target.type === "file") {
-            const newFiles = Array.from(e.target.files); // Converte FileList em array
-            setFile((prevFiles) => [...prevFiles, ...newFiles]); // Adiciona os novos arquivos ao estado
+            const newFiles = Array.from(e.target.files); 
+            setFile((prevFiles) => [...prevFiles, ...newFiles]); 
         } else {
             setTask({ ...task, [e.target.name]: e.target.value });
         }
@@ -118,8 +118,6 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
             />
 
             <Input type="date" text="Prazo da tarefa" name="prazo" placeholder="Insira o prazo da tarefa" handleOnChange={handleChange} />
-            <Input type="number" text="Custo da tarefa" name="cost" placeholder="Insira o custo da tarefa" handleOnChange={handleChange} />
-           
 
             <Input type="text" text="Descrição da tarefa" name="descricao" placeholder="Insira a descrição da tarefa" handleOnChange={handleChange} />
 
