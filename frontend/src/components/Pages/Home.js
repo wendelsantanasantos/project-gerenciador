@@ -9,7 +9,7 @@ function Home(){
             <h1>Bem-vindo ao <span>UniProj</span></h1>
             <p>Começe a gerenciar seus projetos agora mesmo!</p>
             <LinkButton para="/NovoProjeto" texto="Criar Projeto"/>
-            <img src={logo} alt="Cost" />
+            <img src={logo} alt="Cost"/>
         </section>
     )
 }
