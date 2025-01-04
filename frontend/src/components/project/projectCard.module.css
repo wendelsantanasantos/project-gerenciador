@@ -1,8 +1,7 @@
 .projectCard {
     width: 30%;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #adadada8;
     border-radius: 10px;
-    padding: 1em;
     margin: 1em;
     background-color: #f9f9f9;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -21,6 +20,10 @@
     margin-bottom: 1em;
 }
 
+.projectCard_info{
+    padding: 1em;
+}
+
 .projectCard_status p {
     color: #fff;
     border-radius: 12px 0 0 12px;
@@ -28,7 +31,6 @@
     padding: 0.5em;
     font-weight: bold;
     width: auto;
-    margin-right: -0.5em;
 }
 
 .pendente .projectCard_status p {
@@ -47,10 +49,10 @@
     background-color: #333;
     color: #fff;
     padding: 0.8em;
-    margin: -0.5em -1em 0.5em -1em;
     font-size: 1.4em;
     text-align: center;
     border-radius: 10px 10px 0 0;
+    margin-bottom: .5em;
 }
 
 .projectCard p {

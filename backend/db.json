@@ -1,42 +1,6 @@
 {
   "projects": [
     {
-      "name": "sistema integrado c++",
-      "budget": "100000",
-      "category": {
-        "id": "5",
-        "name": "Planejamento"
-      },
-      "start_date": "2024-12-24",
-      "end_date": "2025-01-11",
-      "description": "projeto para venda de metafetamina ",
-      "members": [
-        "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
-        "270f8d52-5384-4ac0-8219-e38a89c4b402"
-      ],
-      "cost": 0,
-      "tasks": [
-        {
-          "prioridade": "Baixa",
-          "name": "limpar a sala",
-          "prazo": "2025-01-01",
-          "descricao": "limpeza",
-          "status": "Pendente",
-          "members": [
-            "270f8d52-5384-4ac0-8219-e38a89c4b402"
-          ],
-          "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1735689997498-dino_strip3.png"
-          ],
-          "id": "448ae71b-bc39-44ea-885b-40bb7b376e31"
-        }
-      ],
-      "services": [],
-      "id": "e8397f0c-1fc0-4c2d-9e1a-f413c910a63f",
-      "status": "Em andamento",
-      "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
-    },
-    {
       "name": "Rede Social",
       "budget": "0,0",
       "category": {
@@ -53,6 +17,78 @@
       "id": "dca50ea7-be34-477a-a769-12e60e64c8f5",
       "status": "Em andamento",
       "userId": "e46572c9-4ff4-4b11-bc2e-35b1647650a4"
+    },
+    {
+      "name": "projeto-teste",
+      "budget": "2000",
+      "category": {
+        "id": "4",
+        "name": "infraestrutura"
+      },
+      "start_date": "2025-01-11",
+      "end_date": "2025-01-31",
+      "description": "descarte",
+      "members": [
+        "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
+        "270f8d52-5384-4ac0-8219-e38a89c4b402",
+        "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
+      ],
+      "cost": 66,
+      "tasks": [
+        {
+          "prioridade": "Baixa",
+          "name": "limpar a sala",
+          "prazo": "2025-01-11",
+          "descricao": "descarte",
+          "status": "Pendente",
+          "members": [
+            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
+          ],
+          "files": [
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736004482870-Cute White Welcome Back to School Video.jpg"
+          ],
+          "id": "00d2089e-cee6-48e7-9841-83b0ca5ff73d"
+        },
+        {
+          "prioridade": "Baixa",
+          "name": "teste",
+          "prazo": "2025-01-31",
+          "descricao": "limpeza",
+          "status": "Em andamento",
+          "members": [
+            "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+          ],
+          "files": [],
+          "id": "f961a131-e460-43d4-89be-0bb797a11723"
+        }
+      ],
+      "services": [
+        {
+          "id": "ecf830b3-cdad-4a0e-989b-c29589cf2c99",
+          "name": "teste-serviço",
+          "cost": "22",
+          "description": "plantar",
+          "date": "2025-01-30"
+        },
+        {
+          "id": "794412be-31a1-45f5-a993-beaba47fd104",
+          "name": "teste-serviço",
+          "cost": "22",
+          "description": "plantar",
+          "date": "2025-01-30"
+        },
+        {
+          "id": "d43897bd-3fb8-48f7-9443-62433073df38",
+          "name": "teste-serviço",
+          "cost": "22",
+          "description": "plantar",
+          "date": "2025-01-30"
+        }
+      ],
+      "id": "dbd072a1-f48b-42c1-939f-4945f9351915",
+      "status": "Em andamento",
+      "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
+      "isAdm": true
     }
   ],
   "categories": [

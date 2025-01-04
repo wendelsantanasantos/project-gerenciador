@@ -32,10 +32,12 @@ function ProjectCard({
     }`}
   >     
       <h4>{name}</h4>
+
       <div className={style.projectCard_status}>
         <p>{status || "Pendente"}</p>
       </div>
 
+      <div  className={style.projectCard_info}>
       <p>
         <span>Deadline:</span>
         {prazo}
@@ -67,6 +69,7 @@ function ProjectCard({
         <button onClick={remove}>
           <BsFillTrashFill /> Delete
         </button>
+      </div>
       </div>
     </div>
   );

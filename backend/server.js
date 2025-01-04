@@ -387,43 +387,63 @@ app.delete("/projects/:id", async (req, res) => {
   }
 });
 
-app.post("/projects/:id/services", async (req, res) => {
+// Adiciona um serviço ao projeto
+app.post("/projects/:id/services", upload.array('files', 10), async (req, res) => {
   const { id } = req.params;
-  const newService = req.body;
+  const newService = req.body; // Obtém os dados do serviço enviados no corpo da requisição
+
+  console.log("Dados do serviço:", newService);
+
+  // Verifica se arquivos foram enviados
+  if (req.files && req.files.length > 0) {
+    // Adiciona os arquivos ao serviço, você pode adicionar os caminhos dos arquivos ou os próprios arquivos
+    newService.files = req.files.map(file => file.path);
+  }
 
   try {
-    const data = await fs.readFile(dbPath, "utf-8");
-    const db = JSON.parse(data);
+      const data = await fs.readFile(dbPath, "utf-8");
+      const db = JSON.parse(data);
 
-    // Encontra o projeto
-    const project = db.projects.find((p) => p.id === id);
-    if (!project) {
-      return res.status(404).json("Projeto não encontrado");
-    }
+      // Encontra o projeto
+      const project = db.projects.find((p) => p.id === id);
+      if (!project) {
+          return res.status(404).json("Projeto não encontrado");
+      }
 
-    if (!newService || !newService.cost) {
-      return res.status(400).json("Dados do serviço inválidos");
-    }
+      // Verifica se os dados do serviço são válidos
+      if (!newService || !newService.cost) {
+          return res.status(400).json("Dados do serviço inválidos");
+      }
 
-    const serviceCost = parseFloat(newService.cost);
-    if (isNaN(serviceCost)) {
-      return res.status(400).json("Custo do serviço inválido");
-    }
+      const serviceCost = parseFloat(newService.cost);
+      if (isNaN(serviceCost)) {
+          return res.status(400).json("Custo do serviço inválido");
+      }
 
-    newService.id = uuidv4();
-    project.services.push(newService);
+      newService.id = uuidv4(); // Gere um ID único para o serviço
 
-    const newCost = parseFloat(project.cost) + serviceCost;
-    project.cost = newCost;
+      // Adiciona o serviço ao projeto
+      project.services.push({
+          id: newService.id,
+          name: newService.name,
+          cost: newService.cost,
+          description: newService.description,
+          date: newService.date,
+          files: newService.files // Salva os arquivos enviados
+      });
 
-  
-    await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+      // Atualiza o custo total do projeto
+      const newCost = parseFloat(project.cost) + serviceCost;
+      project.cost = newCost;
 
-    console.log("Serviço adicionado com sucesso:", newService);
-    res.status(201).json(newService);
+      // Salva os dados atualizados no arquivo
+      await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+
+      console.log("Serviço adicionado com sucesso:", newService);
+      res.status(201).json(project); // Retorna o projeto atualizado
   } catch (err) {
-    console.error("Erro ao processar a requisição:", err);
-    res.status(500).json("Erro ao adicionar o serviço");
+      console.error("Erro ao processar a requisição:", err);
+      res.status(500).json("Erro ao adicionar o serviço");
   }
 });
 

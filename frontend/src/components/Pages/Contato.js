@@ -1,9 +1,12 @@
 import styles from "./Contato.module.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+
 
 function Contato() {
     return (
+        
         <div className={styles.container}>
             <div className={styles.header}>
                 <h1>Quer entrar em contato?</h1>
@@ -14,21 +17,24 @@ function Contato() {
                 <div className={styles.card}>
                     <h2>Perguntas gerais</h2>
                     <p>Envie uma mensagem usando o formulário abaixo e entraremos em contato dentro de um dia útil.</p>
-                    <a href="#" className={styles.button}>Entre em contato</a>
+                    <a href="/home" className={styles.button}>Entre em contato</a>
                 </div>
 
                 <div className={styles.card}>
                     <h2>Redes Sociais</h2>
                     <p>Siga-nos nas redes sociais e fique por dentro das novidades.</p>
                     <p>
-                        <a href="#" className={styles.link}>
-                            <FontAwesomeIcon icon={faInstagram}/> INSTAGRAM
+                        <a href="https://www.instagram.com" className={styles.link}>
+                        <FaInstagram />
+                        INSTAGRAM
                         </a><br />
-                        <a href="#" className={styles.link}>
-                            <FontAwesomeIcon icon={faFacebook} /> FACEBOOK
+                        <a href="https://www.facebook.com" className={styles.link}>
+                        <FaFacebook />
+                        FACEBOOK
                         </a><br />
-                        <a href="#" className={styles.link}>
-                            <FontAwesomeIcon icon={faWhatsapp} /> WHATSAPP
+                        <a href="https://www.whatsapp.com" className={styles.link}>
+                        <FaWhatsapp />
+                        WHATSAPP
                         </a>
                     </p>
                 </div>

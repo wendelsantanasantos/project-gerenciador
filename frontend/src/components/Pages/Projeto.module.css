@@ -1,6 +1,5 @@
 .project_details{
     padding: 2em;
-   
     margin: auto;
     margin-top: 5em;
 }
@@ -37,7 +36,10 @@
 
 .details_container,
 .services_form_container,
-.members_container{
+.members_container,
+.tasks_container,
+.services_container
+{
     flex-wrap: wrap;
     border-bottom: 1px solid #7b7b7b;
     margin-bottom: 1.2em;

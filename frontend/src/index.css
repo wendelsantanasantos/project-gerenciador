@@ -6,16 +6,17 @@
 }
 
 html,body{
-  background-color: #dbdbdb;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
+  height:100% ;
 }
+
 
 :root{
 --textColor--:#80A2A6;
 --backgroundcolor--: #011830;
---backgroundcolor2--:rgb(211, 207, 207);
+--backgroundcolor2--:rgb(230, 224, 224);
 --p-color--:#1B2B40 ;
 --orange--:#BF5934;
 --yellow--: #FFFF00;

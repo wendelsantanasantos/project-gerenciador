@@ -5,6 +5,7 @@ import Empresa from "./components/Pages/Empres";
 import NovoProjeto from "./components/Pages/NovoProjeto";
 import Container from "./components/Layout/Container";
 import NavBar from "./components/Layout/NavBar";
+import SideBar from "./components/Layout/sideBar";
 import Footer from "./components/Layout/Footer";
 import MeusProjetos from "./components/Pages/MeusProjetos"
 import ProjetosEquipe from "./components/Pages/ProjetosEquipe"
@@ -16,6 +17,7 @@ function App() {
   return (
     <Router>
       <NavBar/>
+      <SideBar/>
       <Container customClass="minHeigth">
         <Routes>
           <Route path="/" element={<Home />} />

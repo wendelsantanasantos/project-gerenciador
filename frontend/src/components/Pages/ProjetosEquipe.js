@@ -6,7 +6,6 @@ import Container from "../Layout/Container";
 import style from "./ProjetosEquipe.module.css";
 import ProjectCard from "../project/projectCard";
 import Loading from "../Layout/Loading";
-import SideBar from "../Layout/sideBar";
 
 
 function ProjetosEquipe() {
@@ -49,7 +48,6 @@ function ProjetosEquipe() {
   }
   return (
     <>
-    <SideBar/>
     <div className={style.meusProjetos_container}>
       <div className={style.meusProjetos_header}>
         <h1>Projetos Compartilhados</h1>

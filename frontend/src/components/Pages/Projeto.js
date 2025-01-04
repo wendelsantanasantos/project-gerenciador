@@ -25,44 +25,74 @@ function Projeto() {
     const [msg, setMsg] = useState('')
     const [type, setType] = useState('')
 
-    function createService(){
-
-        setMsg('')
-
-        const lastTask = project.services[project.services.length - 1]
-        lastTask.id = uuidv4()
-
-        const lastServiceCost = lastTask.cost
-
-        const newCost = parseFloat(project.cost)+parseFloat(lastServiceCost)
-
-        if(newCost > parseFloat(project.budget)){
-            setMsg('Orçamento ultrapassado, verifique o valor do serviço')
-            setType('error')
-            project.services.pop()
-            return
+    function createService(newService) {
+        setMsg(''); // Limpa a mensagem anterior
+    
+        // Verifica se o projeto já tem serviços ou se precisa inicializar a lista
+        if (!project.services || project.services.length === 0) {
+            project.services = [];
         }
-
-        project.cost = newCost
-
+    
+        // Cria um novo serviço com um ID único
+        const lastService = {
+            ...newService,
+            id: uuidv4(),  // Gera um ID único para o serviço
+        };
+    
+        // Cria um FormData para enviar os dados
+        const formData = new FormData();
+    
+        // Adiciona os dados do serviço ao FormData
+        for (const key in lastService) {
+            if (lastService[key]) {
+                formData.append(key, lastService[key]);
+            }
+        }
+    
+        // Se houver arquivos para enviar, adiciona ao FormData
+        if (newService.files && newService.files.length > 0) {
+            newService.files.forEach((file) => {
+                formData.append('files', file);
+            });
+        }
+    
+        // Verifica se o custo do novo serviço está dentro do orçamento do projeto
+        const serviceCost = parseFloat(lastService.cost);
+        const newCost = parseFloat(project.cost) + serviceCost;
+        
+        if (newCost > parseFloat(project.budget)) {
+            setMsg('Orçamento ultrapassado, verifique o valor do serviço');
+            setType('error');
+            return;
+        }
+    
+        // Atualiza o projeto com o novo custo
+        const updatedProject = {
+            ...project,
+            cost: newCost, // Atualiza o custo total do projeto
+            services: [...project.services, lastService], // Adiciona o novo serviço à lista de serviços
+        };
+    
+        // Faz a requisição POST para adicionar o serviço
         fetch(`http://localhost:5000/projects/${project.id}/services`, {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(project)
+            method: 'POST', // Usando POST para criar um novo serviço
+            body: formData, // Envia os dados como FormData, incluindo arquivos
         })
         .then((resp) => resp.json())
         .then((data) => {
-            setProject(data)
-            setServices(data.services)
-            setMsg('Serviço adicionado!')
-            setType('success')
+            console.log('Serviço criado com sucesso!', data.services);
+            setProject(data); // Atualiza o estado com os dados do projeto atualizados
+            setServices(data.services); // Atualiza a lista de serviços
+            setMsg('Serviço criado com sucesso!');
+            setType('success');
         })
-        .catch(
-            (erro) => console.log(erro))
-        
+        .catch((erro) => {
+            console.error('Erro ao adicionar serviço:', erro);
+            setMsg('Erro ao adicionar serviço!');
+            setType('error');
+        });
     }
+    
 
     const toggleProjectForm = () => setShowProjectForm(!showProjectForm)
     const toggleServiceForm = () => setShowServiceForm(!showServiceForm)
@@ -208,6 +238,8 @@ function Projeto() {
             setType('error');
         });
     }
+
+    const restante = parseFloat(project.budget) - parseFloat(project.cost)
     
         
         function removeTask(id) {
@@ -288,6 +320,10 @@ function Projeto() {
                             <span>Total Utilizado: </span> R$ {project.cost}
                             </p>
 
+                            <p>
+                            <span>Valor Restante: </span> R$ {restante}
+                            </p>
+
                        </div>
                      ):  (
                         <div className={styles.project_info}>
@@ -296,6 +332,7 @@ function Projeto() {
                      ) }
                 </div>
 
+                <div className={styles.tasks_container}>
                 <h2>
                     Tarefas
                 </h2>
@@ -319,6 +356,7 @@ function Projeto() {
                     )}
                     {tasks.length === 0 && <p>Não há tarefas cadastradas</p>}
 
+                    </div>
 
                 <div className={styles.services_form_container}>
                    {
@@ -339,7 +377,9 @@ function Projeto() {
 
                 </div>
 
-                <h2>
+                
+               <div className={styles.services_container}>
+               <h2>
                     Serviços
                 </h2>
                     {services.length > 0 && (
@@ -355,6 +395,7 @@ function Projeto() {
                         ))
                     )}
                     {services.length === 0 && <p>Não há serviços cadastrados</p>}
+               </div>
                 
                 <div className={styles.services_form_container}>
                    {

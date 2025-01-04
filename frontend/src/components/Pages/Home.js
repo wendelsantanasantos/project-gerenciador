@@ -1,5 +1,4 @@
 import styles from './Home.module.css'
-import imagem from '../../img/savings.svg'
 import LinkButton from '../Layout/LinkButton'
 import logo from '../../img/logo_projeto_2.png'
 
