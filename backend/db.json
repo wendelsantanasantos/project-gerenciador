@@ -35,6 +35,24 @@
       "id": "e8397f0c-1fc0-4c2d-9e1a-f413c910a63f",
       "status": "Em andamento",
       "userId": "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+    },
+    {
+      "name": "Rede Social",
+      "budget": "0,0",
+      "category": {
+        "id": "1",
+        "name": "Desenvolvimento"
+      },
+      "start_date": "2025-01-01",
+      "end_date": "2025-06-11",
+      "description": "Quero fazer uma copia do X/Twitter",
+      "members": [],
+      "cost": 0,
+      "tasks": [],
+      "services": [],
+      "id": "dca50ea7-be34-477a-a769-12e60e64c8f5",
+      "status": "Em andamento",
+      "userId": "e46572c9-4ff4-4b11-bc2e-35b1647650a4"
     }
   ],
   "categories": [
@@ -80,6 +98,12 @@
       "password": "$2b$10$DV3WkwumonuBwpDTC0sZSe911SAdyqkE887W7Ve8KcASFjK/nFsK6",
       "id": "270f8d52-5384-4ac0-8219-e38a89c4b402",
       "img": "/uploads/1735506207833-creatina-probiotica-energia-muscular-recuperacao.webp"
+    },
+    {
+      "name": "Gustavo Alves Souza",
+      "email": "Gustavo@Gu.com",
+      "password": "$2b$10$A5kDYJ2Kcywlb6BcMzNhwusDz4WejIaK9nI5sRPwSnF0rqQAIPZWy",
+      "id": "e46572c9-4ff4-4b11-bc2e-35b1647650a4"
     }
   ]
 }

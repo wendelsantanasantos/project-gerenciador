@@ -1,14 +1,15 @@
 import styles from './Home.module.css'
 import imagem from '../../img/savings.svg'
 import LinkButton from '../Layout/LinkButton'
+import logo from '../../img/logo_projeto_2.png'
 
 function Home(){
     return(
         <section className={styles.home_container}>
-            <h1>Bem-vindo ao <span>Cost</span></h1>
+            <h1>Bem-vindo ao <span>UniProj</span></h1>
             <p>Começe a gerenciar seus projetos agora mesmo!</p>
             <LinkButton para="/NovoProjeto" texto="Criar Projeto"/>
-            <img src={imagem} alt="Cost" />
+            <img src={logo} alt="Cost"/>
         </section>
     )
 }

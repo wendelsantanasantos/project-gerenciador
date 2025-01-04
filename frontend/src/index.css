@@ -15,7 +15,7 @@ html,body{
 :root{
 --textColor--:#80A2A6;
 --backgroundcolor--: #011830;
---backgroundcolor2--:#F2F2F2;
+--backgroundcolor2--:rgb(211, 207, 207);
 --p-color--:#1B2B40 ;
 --orange--:#BF5934;
 --yellow--: #FFFF00;

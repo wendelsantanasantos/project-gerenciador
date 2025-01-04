@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #F3F3F2; /* Fundo principal */
+    color: #011830; /* Texto */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    color: #03258C; /* Título */
+}
+
+.header p {
+    font-size: 18px;
+    color: #011830;
+    margin-bottom: 100px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9; 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 400px;
+    padding: 20px;
+    border: 1px solid blue;
+}
+
+.card h2 {
+    color: #011830;
+    font-size: 25px;
+    margin-bottom: 10px;
+    font-family: Tahoma, sans-serif;
+}
+
+.card p {
+    color: #011830;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.card a {
+    display: inline-block;
+    background-color: #01A6DF; 
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 2px;
+    width: 150px;
+}
+
+.card a:hover {
+    background-color: #03258C; 
+}
+
+.footer {
+    background-color: #011830; 
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 30px;
+}
