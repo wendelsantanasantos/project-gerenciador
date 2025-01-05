@@ -1,13 +1,31 @@
 .Task{
-    width: 30%;
+    width: 32%;
+    height: 250px;
     border: 1px solid #ccc;
+    border-left: 5px solid #e60808;
     border-radius: 5px;
-    padding: .5em;
-    margin: .5em;
+    padding: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    
+}
+
+.Task:hover {
+transform: translateY(-5px);
+box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .taskHeader{
    display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 1em;
+}
+
+.taskHeader h4{
+    font-size: 1.2em;
+    font-weight: 350;
 }
 
 .Task p{
@@ -15,12 +33,23 @@
     margin-bottom: .2em;
     display: flex;
     align-items: center;
+    font-size: 0.9em;
  
 }
 
 .Task p span{
     font-weight: bold;
     margin-right: .3em;
+    font-size: .95em;
+}
+
+.statusTask
+{
+    display: none;
+}
+
+.prioridade{
+display: none;
 }
 
 .category_text{

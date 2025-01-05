@@ -12,6 +12,7 @@ import ProjetosEquipe from "./components/Pages/ProjetosEquipe"
 import Projeto from "./components/Pages/Projeto";
 import Login from "./components/Pages/Login";
 import CadastroUser from "./components/Pages/CadastroUser";
+import ServicePage from "./components/services/servicePage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/MeusProjetos" element={<MeusProjetos />} />
           <Route path="/ProjetosEquipe" element={<ProjetosEquipe />} />
           <Route path="/projeto/:id" element={<Projeto />} />
+          <Route path="/services/:id" element={<ServicePage />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/CadastroUser" element={<CadastroUser />} />
         </Routes>

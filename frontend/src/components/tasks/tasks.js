@@ -2,10 +2,12 @@ import { useState } from 'react';
 import styles from './tasks.module.css';
 import { BsFillTrashFill } from 'react-icons/bs';
 
+
 function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, status, files = [], handleRemove }) {
     const backendUrl = "http://localhost:5000"; // URL base do backend
 
     const [showFiles, setShowFiles] = useState(false); // Estado para controlar a visibilidade dos arquivos
+    
 
     function Remove(e) {
         e.preventDefault();
@@ -23,22 +25,23 @@ function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, sta
         setShowFiles(!showFiles);
     };
 
+    
+
     return (
         <div className={styles.Task}>
+
             <div className={styles.taskHeader}>
                 <h4>{name}</h4>
                 <div className={styles.statusTask}>
                     <p><span>Status:</span>{status}</p>
                 </div>
 
-                 <p><span>Prioridade:</span>{prioridade}</p>
+                 <div className={styles.prioridade}><p><span>Prioridade:</span>{prioridade}</p></div>
             </div>
 
             <p><span>Prazo:</span>{prazo}</p>
             <p><span>Descrição:</span>{descricao}</p>
             <p><span>Responsáveis:</span>{responsaveis}</p>
-            <p><span>Custo total:</span>{cost}</p>
-
             {/* Botão para mostrar/ocultar os anexos */}
             <div>
                 <button onClick={toggleFilesVisibility}>

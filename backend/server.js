@@ -329,6 +329,36 @@ app.get("/projects/:id",authMiddleware, async (req, res) => {
   }
 });
 
+// Buscando Serviço
+app.get("/services/:id", authMiddleware, async (req, res) => {
+  const { id: serviceId } = req.params;
+
+  console.log("Buscando serviço com ID:", serviceId);
+
+  // Lendo o banco de dados do arquivo
+  const data = await fs.readFile(dbPath, "utf-8");
+  const db = JSON.parse(data);
+
+  console.log("Total de projetos:", db.projects.length);
+
+  // Iterar pelos projetos para buscar o serviço pelo ID
+  let service;
+  db.projects.some((project) => {
+    service = project.services.find((s) => s.id === serviceId);
+    return service; // Para parar a iteração se o serviço for encontrado
+  });
+
+  if (!service) {
+    console.log("Serviço não encontrado");
+    return res.status(404).json({ error: "Serviço não encontrado" });
+  }
+
+  console.log("Serviço encontrado:", service);
+  res.status(200).json(service);
+});
+
+
+
 // Atualiza as informações de um projeto
 app.patch("/projects/:id", async (req, res) => {
 
@@ -581,16 +611,42 @@ app.get("/usersSearch", async (req, res) => {
   }
 });
 
+//rota para buscar os membros pelo id
+
+app.get("/members/:memberId", async (req, res) => {
+  
+  const { memberId } = req.params;
+
+  console.log(memberId);
+
+  try {
+    const data = await fs.readFile(dbPath, "utf-8");
+    const db = JSON.parse(data);
+
+    const member = db.users.find((user) => user.id === memberId);
+    console.log('membros da tarefa:',member);
+
+    if (!member) {
+      return res.status(404).json("Membro não encontrado");
+    }
+    res.status(200).json(member);
+
+  } catch (err) {
+    console.error("Erro ao processar a requisição:", err);
+    res.status(500).json({ message: "Erro ao processar a requisição", error: err.message });
+  }
+})
+
 app.get("/projects/:id/members", async (req, res) => {
   const { id } = req.params;
-
+  
   try {
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
 
     const project = db.projects.find((p) => p.id === id);
     if (!project) {
-      return res.status(404).json("Projeto não encontrado");
+      return res.status(404).json("Membros não encontrado");
     }
     const memberDetails = project.members.map(memberId => {
       return db.users.find(user => user.id === memberId);

@@ -19,6 +19,7 @@ function Projeto() {
     const [services, setServices] = useState([])
     const [tasks, setTasks] = useState([])
     const [members, setMembers] = useState([])
+    const [taskMembers, setTaskMembers] = useState([])
     const [showProjectForm, setShowProjectForm] = useState(false)
     const [showServiceForm, setShowServiceForm] = useState(false)
     const [showTaskForm, setShowTaskForm] = useState(false)
@@ -93,6 +94,21 @@ function Projeto() {
         });
     }
     
+    function fetchMembers(ids) {
+        Promise.all(ids.map(id => 
+            fetch(`http://localhost:5000/members/${id}`)
+            .then(response => response.json())
+        ))
+        .then(membersData => {
+            setTaskMembers(membersData); 
+        
+        })
+        .catch(error => {
+            console.error('Erro ao carregar membros:', error);
+            setMsg('Erro ao carregar membros do projeto!');
+            setType('error');
+        });
+    }
 
     const toggleProjectForm = () => setShowProjectForm(!showProjectForm)
     const toggleServiceForm = () => setShowServiceForm(!showServiceForm)
@@ -119,6 +135,10 @@ function Projeto() {
                     setServices(data.services || []); 
                     setTasks(data.tasks || [])
                     teamMembers(data.id)
+                     // Chama fetchMembers para obter os dados dos membros das tarefas
+                 data.tasks.forEach(task => {
+                   fetchMembers(task.members);  // Passa os IDs dos membros da tarefa
+            });
                     setIsAdm(data.isAdm)
                 })
                 .catch((erro) => {
@@ -127,6 +147,11 @@ function Projeto() {
                 });
         }, 1000);
     }, [id]);
+
+    useEffect(() => {
+        console.log('Membros carregados:', taskMembers);  // Isso será chamado sempre que taskMembers mudar
+    }, [taskMembers]);  // O efeito será acionado sempre que taskMembers for atualizado
+    
     
 
     function editProject(project){
@@ -242,7 +267,7 @@ function Projeto() {
     const restante = parseFloat(project.budget) - parseFloat(project.cost)
     
         
-        function removeTask(id) {
+     function removeTask(id) {
             setMsg('');
         
             fetch(`http://localhost:5000/projects/${project.id}/tasks/${id}`, {
@@ -270,7 +295,7 @@ function Projeto() {
             });
         }
 
-        function teamMembers(id) {
+     function teamMembers(id) {
             setMsg('');
         
             fetch(`http://localhost:5000/projects/${id}/members`, {
@@ -289,9 +314,13 @@ function Projeto() {
                 setType('error');
             });
         }
-        
-    
 
+    function foramatarData(data) {
+        const novaData = data.replace(/-/g, '/');
+        return novaData
+    }
+
+   
     return (
         <>{project.name ? (
         <div className={styles.project_details}>
@@ -308,6 +337,9 @@ function Projeto() {
                      
                      {!showProjectForm? (
                        <div className={styles.project_info}>
+
+                            <p>
+                                <span>Prazo: </span>{foramatarData(project.end_date)}</p>
                            <p>
                             <span>Categoria: </span>{project.category.name}
                            </p> 
@@ -332,31 +364,38 @@ function Projeto() {
                      ) }
                 </div>
 
-                <div className={styles.tasks_container}>
-                <h2>
-                    Tarefas
-                </h2>
-        
-                    {tasks.length > 0 && (
-                        tasks.map((task) => (
-                            <Tasks 
-                            id={task.id}
-                            name={task.name}
-                            cost={task.cost}
-                            descricao={task.descricao}
-                            prioridade={task.prioridade}
-                            prazo={task.prazo}
-                            status={task.status}
-                            files={task.files}
-                            responsaveis={task.members}
-                            key={task.id}
-                            handleRemove={removeTask}
-                            />
-                        ))
-                    )}
-                    {tasks.length === 0 && <p>Não há tarefas cadastradas</p>}
+                
+<h2>
+    Tarefas
+        </h2>
+        <div className={styles.tasks_container}>
+         {tasks.length > 0 && (
+            tasks.map((task) => {
 
-                    </div>
+                const responsaveis = task.members.map((memberId) => {
+                    const member = taskMembers.find((m) => m.id === memberId);
+                    return member ? member.name : null;  // Retorna null se não encontrado
+                }).filter((name) => name !== null);  // Filtra valores null
+           
+            return (
+                <Tasks 
+                    id={task.id}
+                    name={task.name}
+                    cost={task.cost}
+                    descricao={task.descricao}
+                    prioridade={task.prioridade}
+                    prazo={foramatarData(task.prazo)}
+                    status={task.status}
+                    files={task.files}
+                    responsaveis={responsaveis.join(', ')}  // Concatena os nomes dos responsáveis
+                    key={task.id}
+                    handleRemove={removeTask}
+                />
+            );
+        })
+    )}
+    {tasks.length === 0 && <p>Não há tarefas cadastradas</p>}
+</div>
 
                 <div className={styles.services_form_container}>
                    {
@@ -378,10 +417,11 @@ function Projeto() {
                 </div>
 
                 
-               <div className={styles.services_container}>
+               
                <h2>
                     Serviços
                 </h2>
+                <div className={styles.services_container}>
                     {services.length > 0 && (
                         services.map((service) => (
                             <ServiceCard 
