@@ -1,8 +1,7 @@
 .navbar{
     display: flex;
     justify-content: space-between;
-    padding: 1.2em;
-    padding-left: 180px;
+    padding-left: 130px;
     width: 100%;
     z-index: 5 !important;
     position: fixed;
@@ -11,6 +10,20 @@
     box-shadow: 0px 3px 10px rgba(59, 59, 59, 0.048);
 }
 
+/* Estilos para o SVG */
+.logo {
+    width: 100px;  
+    height: 100px; 
+
+}
+
+.logo path {
+   padding-top: 1em;
+    width: 100%;
+    height: 100%;
+    fill: var(--backgroundcolor--);
+}
+ 
 .list{
     display: flex;
     list-style: none;
@@ -37,3 +50,6 @@
     margin-right: .3em;
     font-size: 1.5em;
 }
+
+
+

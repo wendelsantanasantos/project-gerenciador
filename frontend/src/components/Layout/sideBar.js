@@ -9,6 +9,7 @@ import { BsFileEarmarkTextFill } from "react-icons/bs";
 import { BsBriefcaseFill } from "react-icons/bs";
 import { BsBoxes } from "react-icons/bs";
 import { TbMessage } from "react-icons/tb";
+import Fade from './Fade';
 
 
 
@@ -24,12 +25,13 @@ function SideBar() {
   }
 
     return (
+      <>
       <div className={`${styles.sidebar} ${showMenu ? styles.sidebarOpen :styles.sidebarClose}`}>
-      <nav className={styles.menu}>
+        <nav className={styles.menu}>
+        
 
-       <div className={styles.logoContainer}>
+        <div className={styles.logoContainer}>
                   
-
                       <PiListBold onClick={showMenuBtn} className={`${styles.menuIcon} ${showMenu ? styles.iconRotate :styles.menuIcon}`}/>
         </div>
         
@@ -71,6 +73,10 @@ function SideBar() {
     
             </nav>
         </div>
+        {showMenu && <Fade />}
+      </>
+        
+        
     );
 }
 

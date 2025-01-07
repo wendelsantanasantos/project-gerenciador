@@ -1,4 +1,4 @@
-.project_details{
+.service_details{
     padding: 2em;
     margin: auto;
     margin-top: 5em;
@@ -9,19 +9,19 @@
     display: none;
 }
 
-.project_details h1,
-.project_details h2,
-.project_details p{
+.service_details h1,
+.service_details h2,
+.service_details p{
     margin-bottom: 1em;
 }
 
-.project_details span{
+.service_details span{
     font-weight: bold;
     color: #363636;
     
 }
 
-.project_details h1{
+.service_details h1{
     background-color: var(--backgroundcolor--);
     color: var(--textColor--);
     padding: 0.5em 1em;
@@ -29,7 +29,7 @@
 
 }
 
-.project_details p{
+.service_details p{
 
     font-weight: 400;
     color: var(--p-color--);
@@ -37,9 +37,7 @@
 
 .details_container,
 .services_form_container,
-.members_container,
-.tasks_container,
-.services_container
+.members_container
 {
     flex-wrap: wrap;
     border-bottom: 1px solid #7b7b7b;
@@ -49,6 +47,15 @@
     justify-content: space-between;
     align-items: flex-start;
 }
+
+.services_form_container{
+    justify-content: left;
+}
+
+.services_form_container button{
+    margin-right: 2em;
+}
+
 
 
 
@@ -131,7 +138,7 @@
     color: var(--textColor--);
 }
 
-.project_info{
+.service_info{
     width: 100%;
 }
 

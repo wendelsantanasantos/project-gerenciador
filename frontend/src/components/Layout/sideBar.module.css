@@ -3,7 +3,7 @@
     width: 100px;
     height: 100% !important;
     position: fixed;
-    z-index: 6 !important;
+    z-index: 10 !important;
     left: 0;
     top: 0p;
     padding-top: 1em;

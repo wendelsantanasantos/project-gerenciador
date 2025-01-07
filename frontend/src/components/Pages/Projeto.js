@@ -10,6 +10,8 @@ import TasksForm from '../tasks/tasksForm';
 import Tasks from '../tasks/tasks';
 import Mensagem from "../Layout/Mensagem";
 import { VscAccount } from "react-icons/vsc";
+import { useNavigate } from 'react-router-dom'
+
 
 function Projeto() {
 
@@ -25,6 +27,8 @@ function Projeto() {
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [msg, setMsg] = useState('')
     const [type, setType] = useState('')
+
+    const navigate = useNavigate()
 
     function createService(newService) {
         setMsg(''); // Limpa a mensagem anterior
@@ -149,7 +153,6 @@ function Projeto() {
     }, [id]);
 
     useEffect(() => {
-        console.log('Membros carregados:', taskMembers);  // Isso será chamado sempre que taskMembers mudar
     }, [taskMembers]);  // O efeito será acionado sempre que taskMembers for atualizado
     
     
@@ -431,7 +434,9 @@ function Projeto() {
                             description={service.description}
                             key={service.id}
                             handleRemove={removeService}
+                            isAdm={isAdm}
                             />
+
                         ))
                     )}
                     {services.length === 0 && <p>Não há serviços cadastrados</p>}

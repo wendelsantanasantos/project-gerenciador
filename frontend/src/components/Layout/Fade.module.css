@@ -1,0 +1,13 @@
+.fade{
+    position: fixed;
+    z-index: 5 !important;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100% ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(32, 32, 32, 0.521);
+
+}

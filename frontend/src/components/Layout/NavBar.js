@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Styles from "./NavBar.module.css";
-import logo from "../../img/logo_projeto.png";
+import { ReactComponent as Logo} from "../../img/logo-project-semFundo.svg";
 import { VscAccount } from "react-icons/vsc";
 
 
@@ -10,7 +10,11 @@ function NavBar() {
 
   return (
     <nav className={Styles.navbar}>
-      <img src={logo} alt="Cost" />
+
+        <Link to="/">
+          <Logo className={Styles.logo}/>
+        </Link>
+
         <ul className={Styles.list}>
           <li>
             <Link to="/">Home</Link>
