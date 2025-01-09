@@ -17,20 +17,6 @@
       "cost": 1666,
       "tasks": [
         {
-          "prioridade": "Baixa",
-          "name": "tarefa",
-          "prazo": "2025-01-09",
-          "descricao": "descarte",
-          "status": "Em andamento",
-          "members": [
-            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
-          ],
-          "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736092333845-Cute White Welcome Back to School Video.jpg"
-          ],
-          "id": "895d0bea-1890-4bd3-a702-d503cdd8cfc6"
-        },
-        {
           "prioridade": "Media",
           "name": "TESTE-4",
           "prazo": "2025-01-31",
@@ -48,10 +34,10 @@
       "services": [
         {
           "id": "46748d71-bcaf-44ec-824f-f4c5514329db",
-          "name": "teste",
-          "cost": "1111",
+          "name": "teste-edit-1",
+          "cost": "10000",
           "description": "tudo,isso",
-          "date": "2025-01-21"
+          "date": "2025-01-30"
         },
         {
           "id": "dbe2e048-e69a-40fe-9c6c-092f788529ab",

@@ -357,6 +357,35 @@ app.get("/services/:id", authMiddleware, async (req, res) => {
   res.status(200).json(service);
 });
 
+//Buscando Tasks
+
+app.get("/tasks/:id", authMiddleware, async (req, res) => {
+  const { id: taskId } = req.params;
+
+  console.log("Buscando task com ID:", taskId);
+
+  // Lendo o banco de dados do arquivo
+  const data = await fs.readFile(dbPath, "utf-8");
+  const db = JSON.parse(data);
+
+  console.log("Total de projetos:", db.projects.length);
+
+ 
+  let task;
+  db.projects.some((project) => {
+    task = project.tasks.find((t) => t.id === taskId);
+    return task; 
+  });
+
+  if (!task) {
+    console.log("Task não encontrada");
+    return res.status(404).json({ error: "Task não encontrada" });
+  }
+
+  console.log("Serviço encontrado:", task);
+  res.status(200).json(task);
+
+});
 
 
 // Atualiza as informações de um projeto
@@ -371,20 +400,10 @@ app.patch("/projects/:id", async (req, res) => {
   try {
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
-    const projectIndex = db.projects.findIndex((project) => project.id === id);
 
-    if (projectIndex === -1) {
-      return res.status(404).json("Projeto não encontrado");
-    }
+    // Encontre o serviço dentro do projeto usando o serviceId
+    const service = project.services.find((service) => service.id === serviceId);
 
-    db.projects[projectIndex] = {
-      ...db.projects[projectIndex],
-      ...updatedProject,
-    };
-
-    await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
-
-    res.status(200).json(db.projects[projectIndex]);
   } catch (err) {
     console.error("Erro ao processar a requisição:", err);
     res.status(500).json("Erro ao salvar as alterações no projeto");
@@ -476,6 +495,58 @@ app.post("/projects/:id/services", upload.array('files', 10), async (req, res) =
       res.status(500).json("Erro ao adicionar o serviço");
   }
 });
+
+// Atualiza as informações de um projeto
+app.patch("/projects/services /:id/edit", async (req, res) => {
+
+    const { id: serviceId } = req.params;
+    const updatedService = req.body;  // Dados para atualizar o serviço
+  
+    console.log("Editando serviço com ID:", serviceId);
+  
+    // Lendo o banco de dados do arquivo
+    try {
+      const data = await fs.readFile(dbPath, "utf-8");
+      const db = JSON.parse(data);
+  
+      console.log("Total de projetos:", db.projects.length);
+  
+      // Buscar o serviço dentro do projeto
+      let service;
+      let projectIndex;
+  
+      // Encontrar o projeto que contém o serviço
+      db.projects.some((project, index) => {
+        service = project.services.find((s) => s.id === serviceId);
+        if (service) {
+          projectIndex = index;
+        }
+        return service; // Para parar a iteração se o serviço for encontrado
+      });
+  
+      if (!service) {
+        console.log("Serviço não encontrado");
+        return res.status(404).json({ error: "Serviço não encontrado" });
+      }
+  
+      // Atualizar os dados do serviço encontrado
+      db.projects[projectIndex].services = db.projects[projectIndex].services.map((s) =>
+        s.id === serviceId ? { ...s, ...updatedService } : s
+      );
+  
+      // Salvar as alterações no banco de dados
+      await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+  
+      console.log("Serviço atualizado com sucesso");
+  
+      // Retornar o serviço atualizado
+      res.status(200).json(db.projects[projectIndex].services.find((s) => s.id === serviceId));
+    } catch (err) {
+      console.error("Erro ao processar a requisição:", err);
+      res.status(500).json({ error: "Erro ao salvar as alterações no serviço" });
+    }
+  });
+  
 
 
 // Deleta um serviço do projeto

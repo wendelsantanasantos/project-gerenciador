@@ -1,15 +1,15 @@
-import styles from './servicePage.module.css';
+import styles from './taskPage.module.css';
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loading from "../Layout/Loading";
-import ServiceForm from './ServiceForm'; // Importando o componente do formulário de serviço
+import TaskForm from './tasksForm';
 
-function ServicePage() {
+function TaskPage() {
     const { id } = useParams();
-    const [service, setService] = useState(null);
+    const [task, settask] = useState(null);
     const [msg, setMsg] = useState('');
     const [type, setType] = useState('');
-    const [showServiceForm, setShowServiceForm] = useState(false); // Para controlar a exibição do formulário
+    const [showtaskForm, setShowtaskForm] = useState(false); // Para controlar a exibição do formulário
     const [isAdm, setIsAdm] = useState(false); // Estado inicial como 'false'
 
     useEffect(() => {
@@ -17,8 +17,8 @@ function ServicePage() {
         const isAdmin = localStorage.getItem('isAdm') === 'true';
         setIsAdm(isAdmin); // Atualiza o estado de isAdm
 
-        // Faz a requisição para buscar o serviço
-        fetch(`http://localhost:5000/services/${id}`, {
+        // Faz a requisição para buscar o tarefa
+        fetch(`http://localhost:5000/tasks/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,37 +27,37 @@ function ServicePage() {
         })
         .then((resp) => {
             if (!resp.ok) {
-                throw new Error(`Erro ao buscar o serviço: ${resp.status}`);
+                throw new Error(`Erro ao buscar o tarefa: ${resp.status}`);
             }
             return resp.json();
         })
         .then((data) => {
-            setService(data);
+            settask(data);
         })
         .catch((error) => {
             console.error(error.message);
-            setMsg('Erro ao carregar os dados do serviço!');
+            setMsg('Erro ao carregar os dados do tarefa!');
             setType('error');
         });
     }, [id]);
 
-    function editService(service){
+    function edittask(task){
 
         setMsg('')
 
-      fetch(`http://localhost:5000/projects/services/${id}/edit`, {
+      fetch(`http://localhost:5000/projects/tasks/${id}/edit`, {
         method:'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(service),
+        body: JSON.stringify(task),
         credentials: 'include'
       })
       .then((resp) => resp.json())
       .then((data) => {
-        setService(data)
-        setShowServiceForm(false)
-        setMsg('Serviço atualizado!')
+        settask(data)
+        setShowtaskForm(false)
+        setMsg('tarefa atualizado!')
         setType('success')
       })
       .catch(
@@ -65,11 +65,11 @@ function ServicePage() {
       
     }
 
-    const toggleServiceForm = () => {
-        setShowServiceForm(prevState => !prevState);
+    const toggletaskForm = () => {
+        setShowtaskForm(prevState => !prevState);
     };
 
-    const handleAddService = (formData) => {
+    const handleAddtask = (formData) => {
         console.log("Dados do formulário:", formData);
     };
 
@@ -83,25 +83,27 @@ function ServicePage() {
     return (
         <>
             {msg && <p className={`${styles.message} ${styles[type]}`}>{msg}</p>}
-            {service ? (
-                <div className={styles.service_details}>
-                    <h1>{service.name}</h1>
-                    <p><strong>Descrição:</strong> {service.description}</p>
-                    <p><strong>Data do serviço:</strong> {foramatarData(service.date)}</p>
-                    <p><strong>Custo total:</strong> R$ {service.cost}</p>
+            {task ? (
+                <div className={styles.task_details}>
+                    <h1>{task.name}</h1>
+                    <p><strong>Prioridade:</strong> {task.prioridade}</p>
+                    <p><strong>Status:</strong> {task.status}</p>
+                    <p><strong>Responsáveis:</strong> {task.members}</p>
+                    <p><strong>Descrição:</strong> {task.descricao}</p>
+                    <p><strong>Prazo de conclusão:</strong> {foramatarData(task.prazo)}</p>
 
-                    <div className={styles.services_form_container}>
+                    <div className={styles.tasks_form_container}>
                         {isAdm && (
-                            <button onClick={toggleServiceForm} className={styles.btn}>
-                                {!showServiceForm ? 'Editar Serviço' : 'Fechar'}
+                            <button onClick={toggletaskForm} className={styles.btn}>
+                                {!showtaskForm ? 'Editar tarefa' : 'Fechar'}
                             </button>
                         )}
-                        {showServiceForm && (
+                        {showtaskForm && (
                             <div className={styles.project_info}>
-                                <ServiceForm
-                                    btnText="Editar Serviço"
-                                    handleSubmit={editService}
-                                    projectData={service}
+                                <TaskForm
+                                    handleSubmit={edittask}
+                                    btnText="Editar tarefa"
+                                    task={task}
                                 />
                             </div>
                         )}
@@ -115,4 +117,4 @@ function ServicePage() {
     );
 }
 
-export default ServicePage;
+export default TaskPage;

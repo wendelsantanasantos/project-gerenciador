@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
 import { BsFillTrashFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 
 function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, status, files = [], handleRemove }) {
@@ -8,11 +9,19 @@ function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, sta
 
     const [showFiles, setShowFiles] = useState(false); // Estado para controlar a visibilidade dos arquivos
     
+    const navigate = useNavigate();
+
 
     function Remove(e) {
         e.preventDefault();
         handleRemove(id, cost);
     }
+
+    const redirect = (e) => {
+        if (e.target.tagName !== "BUTTON" && e.target.tagName !== "A") {
+          navigate(`/tasks/${id}`);
+        }
+      };
 
     function isImage(fileName) {
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
@@ -28,7 +37,7 @@ function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, sta
     
 
     return (
-        <div className={styles.Task}>
+        <div className={styles.Task }   onClick={redirect}>
 
             <div className={styles.taskHeader}>
                 <h4>{name}</h4>

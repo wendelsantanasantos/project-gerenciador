@@ -20,6 +20,13 @@ function ProjectCard({
       navigate(`/projeto/${id}`); // Redireciona programaticamente.
     }
   };
+
+  
+  function foramatarData(data) {
+    const novaData = data.replace(/-/g, '/');
+    return novaData
+}
+
   const remove = (e) => {
     e.preventDefault();
     handleRemove(id);
@@ -40,7 +47,7 @@ function ProjectCard({
       <div  className={style.projectCard_info}>
       <p>
         <span>Deadline:</span>
-        {prazo}
+        {foramatarData(prazo)}
       </p>
       <p>
         <span>Budget:</span> R${budget}

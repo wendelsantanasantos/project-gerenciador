@@ -10,12 +10,10 @@ function ServiceForm({ handleSubmit, btnText, projectData }) {
 
     const submit = (e) => {
         e.preventDefault()
-        // Enviar o serviço para o backend
         handleSubmit(service)
     }
 
     function handleChange(e) {
-        // Atualiza o estado do serviço com base nos campos preenchidos
         setService({ ...service, [e.target.name]: e.target.value })
     }
 
