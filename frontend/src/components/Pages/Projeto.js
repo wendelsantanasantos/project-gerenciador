@@ -101,6 +101,11 @@ function Projeto() {
 
     function createTask(formData) {
         setMsg(''); // Limpa a mensagem anterior
+
+        console.log("Dados do FormData na  tarefaPage:");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
     
         // Verifica se o projeto já tem tarefas, se não, inicializa um array
         if (!project.tasks || project.tasks.length === 0) {
@@ -123,7 +128,6 @@ function Projeto() {
         .then((resp) => resp.json())
         .then((data) => {
             console.log('Tarefa criada com sucesso!', data);
-            setProject(data); // Atualiza o estado do projeto com os dados retornados
             setTasks(data); // Atualiza a lista de tarefas
             setMsg('Tarefa criada com sucesso!');
             setType('success');
@@ -309,6 +313,7 @@ function Projeto() {
         }
 
     function foramatarData(data) {
+        if (!data) return '';
         const novaData = data.replace(/-/g, '/');
         return novaData
     }

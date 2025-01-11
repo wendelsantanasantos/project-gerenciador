@@ -11,6 +11,15 @@ function TaskPage() {
     const [type, setType] = useState('');
     const [showtaskForm, setShowtaskForm] = useState(false); // Para controlar a exibição do formulário
     const [isAdm, setIsAdm] = useState(false); // Estado inicial como 'false'
+    const [files, setFiles] = useState([]);
+    const backendUrl = "http://localhost:5000"; // URL base do backend
+
+
+    const [showFiles, setShowFiles] = useState(false); // Estado para controlar a visibilidade dos arquivos
+
+    const toggleFilesVisibility = () => {
+        setShowFiles(!showFiles);
+    };
 
     useEffect(() => {
         // Verifica se o usuário é administrador assim que o componente é montado
@@ -33,6 +42,10 @@ function TaskPage() {
         })
         .then((data) => {
             settask(data);
+            console.log('Dados da tarefa', data);
+            setFiles(data.files);
+            console.log('Arquivos da tarefa', data.files);
+
         })
         .catch((error) => {
             console.error(error.message);
@@ -41,17 +54,31 @@ function TaskPage() {
         });
     }, [id]);
 
-    function edittask(task){
+        const isImage = (fileName) => {
+            // Lista de extensões válidas para imagens
+            const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
+            
+            // Verifica se a extensão do arquivo está na lista de imagens
+            return imageExtensions.some(extension => fileName.toLowerCase().endsWith(extension));
+        };
+    
+        function getFileName(filePath) {
+            return filePath.replace(/^.*[\\\/]/, ''); // Extrai o nome do arquivo do caminho
+        }
+    
+
+    function edittask(formData) {
 
     setMsg('')
-    console.log('task',task)
+     // Exibir dados do FormData no console
+     console.log("Dados do FormData na  tarefaPage:");
+     for (const [key, value] of formData.entries()) {
+         console.log(`${key}:`, value);
+     }
 
       fetch(`http://localhost:5000/projects/tasks/${id}/edit`, {
         method:'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(task),
+        body: formData,
         credentials: 'include'
       })
       .then((resp) => resp.json())
@@ -59,7 +86,7 @@ function TaskPage() {
         settask(data)
         setShowtaskForm(false)
         setMsg('tarefa atualizado!')
-        console.log(data)
+        console.log('Dados atualizados  da tarefa ',data)
         setType('success')
       })
       .catch(
@@ -102,10 +129,62 @@ function TaskPage() {
                                     handleSubmit={edittask}
                                     btnText="Editar tarefa"
                                     projectData={task}
+                                    taskToEdit={task}
                                 />
                             </div>
                         )}
                     </div>
+                    <div>
+                <button onClick={toggleFilesVisibility}>
+                    {showFiles ? 'Ocultar arquivos' : 'Mostrar arquivos'}
+                </button>
+                {showFiles && (
+                    <div>
+                        <p><strong>Arquivos Anexados:</strong></p>
+                        <div className={styles.filesContainer}>
+                            {files && files.length > 0 ? (
+                                files.map((filePath, index) => {
+                                    const fileName = getFileName(filePath); // Extrai o nome do arquivo
+
+                                    return (
+                                        <div key={index} className={styles.filesCard}>
+                                        {isImage(fileName) ? (
+                                            <img
+                                                src={`${backendUrl}/uploads/${fileName}`} // Usando o nome do arquivo
+                                                alt={`Imagem anexada ${index}`}
+                                                className={styles.previewImage}
+                                            />
+                                        ) : fileName.toLowerCase().endsWith('.pdf') ? (
+                                            <div>
+                                                <p>{fileName}</p>
+                                                <iframe
+                                                    src={`${backendUrl}/uploads/${fileName}`} // Usando o nome do arquivo
+                                                    width="300"
+                                                    height="400"
+                                                    title={`Prévia do PDF ${index}`}
+                                                ></iframe>
+                                            </div>
+                                        ) : fileName.toLowerCase().endsWith('.docx') || fileName.toLowerCase().endsWith('.txt') ? (
+                                            <div>
+                                                <p>{fileName}</p>
+                                                <a href={`${backendUrl}/uploads/${fileName}`} target="_blank" rel="noopener noreferrer">
+                                                    Abrir documento
+                                                </a>
+                                            </div>
+                                        ) : (
+                                            <p>{fileName}</p> // Apenas exibe o nome do arquivo se não for imagem, PDF ou documento
+                                        )}
+                                    </div>
+                                    
+                                    );
+                                })
+                            ) : (
+                                <p>Nenhum arquivo anexado</p>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
 
                 </div>
             ) : (

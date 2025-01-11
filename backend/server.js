@@ -434,7 +434,7 @@ app.delete("/projects/:id", async (req, res) => {
 });
 
 // Adiciona um serviço ao projeto
-app.post("/projects/:id/services", upload.array('files', 10), async (req, res) => {
+app.post("/projects/:id/services", upload.array('file', 10), async (req, res) => {
   const { id } = req.params;
   const newService = req.body; // Obtém os dados do serviço enviados no corpo da requisição
 
@@ -544,61 +544,63 @@ app.patch("/projects/services/:id/edit", async (req, res) => {
     }
   });
 
-// Atualiza as informações de uma tarefa
-app.patch("/projects/tasks/:id/edit", async (req, res) => {
-  const { id: taskId } = req.params;
-  const updatedTask = req.body;  
-
-  console.log("Editando tarefa com ID:", taskId);
-
-  // Lendo o banco de dados do arquivo
-  try {
-    const data = await fs.readFile(dbPath, "utf-8");
-    const db = JSON.parse(data);
-
-    console.log("Total de projetos:", db.projects.length);
-
-    // Buscar o serviço dentro do projeto
-    let task;
-    let projectIndex;
-
-    db.projects.some((project, index) => {
-      task = project.tasks.find((s) => s.id === taskId);
-      if (task) {
-        projectIndex = index;
-        return true; // Encerra o loop quando a tarefa é encontrada
-      }
-    });
-
-    if (!task) {
-      console.log("Tarefa não encontrada");
-      return res.status(404).json({ error: "Tarefa não encontrada" });
+  
+app.patch("/projects/tasks/:id/edit", upload.array('file' ), async (req, res) => {
+    const { id: taskId } = req.params;
+  
+    // Obtendo os dados do formulário (não arquivos)
+    const updatedTask = req.body;  
+    console.log("Dados da tarefa a serem atualizados:", updatedTask);
+  
+    // Verificando os arquivos e adicionando seus caminhos ao objeto da tarefa
+    if (req.files) {
+      updatedTask.files = req.files.map(file => file.path); // Salva os caminhos dos arquivos
+      console.log("Arquivos atualizados:", updatedTask.files);
     }
 
-    // Atualizando a tarefa encontrada
-    db.projects[projectIndex].tasks = db.projects[projectIndex].tasks.map((s) =>
-      s.id === taskId ? { ...s, ...updatedTask } : s
-    );
-
-    // Salvar as alterações no banco de dados
-    await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
-
-
-    // Retornar a tarefa atualizada
-    const updatedTaskFromDB = db.projects[projectIndex].tasks.find(
-      (s) => s.id === taskId
-    );
-
-    console.log("Tarefa atualizada com sucesso", updatedTaskFromDB);
-
-    res.status(200).json(updatedTaskFromDB);
-  } catch (err) {
-    console.error("Erro ao processar a requisição:", err);
-    res.status(500).json({ error: "Erro ao salvar as alterações na tarefa" });
-  }
-});
-
   
+    try {
+      const data = await fs.readFile(dbPath, "utf-8");
+      const db = JSON.parse(data);
+  
+      let task;
+      let projectIndex;
+  
+      // Procurando a tarefa no banco de dados
+      db.projects.some((project, index) => {
+        task = project.tasks.find((s) => s.id === taskId);
+        if (task) {
+          projectIndex = index;
+          return true;
+        }
+      });
+  
+      if (!task) {
+        return res.status(404).json({ error: "Tarefa não encontrada" });
+      }
+  
+      // Atualizando a tarefa com os novos dados (incluindo os caminhos dos arquivos)
+      db.projects[projectIndex].tasks = db.projects[projectIndex].tasks.map((s) =>
+        s.id === taskId ? { ...s, ...updatedTask } : s
+      );
+  
+      // Salvando as alterações no banco de dados
+      await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+  
+      const updatedTaskFromDB = db.projects[projectIndex].tasks.find(
+        (s) => s.id === taskId
+      );
+
+      console.log("Tarefa atualizada com sucesso", updatedTaskFromDB);
+  
+      res.status(200).json(updatedTaskFromDB);
+    } catch (err) {
+      console.error("Erro ao processar a requisição:", err);
+      res.status(500);
+    }
+  });
+  
+ 
 // Deleta um serviço do projeto
 app.delete("/projects/:id/services/:serviceId", async (req, res) => {
   const { id, serviceId } = req.params;

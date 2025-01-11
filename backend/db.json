@@ -17,52 +17,62 @@
       "cost": 1666,
       "tasks": [
         {
-          "prioridade": "Baixa",
-          "name": "teste",
-          "prazo": "2025-01-17",
+          "name": "teste-arquivos-2-teste",
+          "prioridade": "Alta",
+          "prazo": "2025-01-18",
           "descricao": "descarte",
           "status": "Pendente",
           "members": [
             "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
+            "270f8d52-5384-4ac0-8219-e38a89c4b402",
             "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
           ],
-          "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736567523631-Cute White Welcome Back to School Video.jpg"
+          "projectId": "b5d41ef3-3075-4e6c-9d55-54e61a4a8e8c",
+          "files": [],
+          "id": "b5d41ef3-3075-4e6c-9d55-54e61a4a8e8c",
+          "file": [
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736615785857-creatina-probiotica-energia-muscular-recuperacao.webp",
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736615785858-logo-project-semFundo.png"
           ],
-          "id": "939bdef5-bd09-4ce1-a902-d587465bb663",
-          "message": "Projeto não encontrado"
+          "taskId": "b5d41ef3-3075-4e6c-9d55-54e61a4a8e8c"
         },
         {
+          "name": "teste-edit-arquivos-1",
           "prioridade": "Baixa",
-          "name": "teste-edit-1",
-          "prazo": "2025-01-15",
-          "descricao": "limpeza",
+          "prazo": "2025-01-22",
+          "descricao": "descarte",
           "status": "Em andamento",
           "members": [
-            "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+            "270f8d52-5384-4ac0-8219-e38a89c4b402",
+            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
           ],
-          "projectId": "47954e3d-3e52-40c9-b216-fdc8623f33da",
+          "projectId": "3de5397a-e273-4a49-98ca-a5c4381ab987",
           "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736571016437-logo-project-semFundo.png"
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618299629-creatina-probiotica-energia-muscular-recuperacao.webp",
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618299630-logo-project-semFundo.png"
           ],
-          "id": "a7e33610-975f-42e8-bb21-dd3b153e734c"
+          "id": "3de5397a-e273-4a49-98ca-a5c4381ab987",
+          "file": "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736615742331-creatina-probiotica-energia-muscular-recuperacao.webp",
+          "taskId": "3de5397a-e273-4a49-98ca-a5c4381ab987"
         },
         {
+          "name": "teste-miniaturafile",
           "prioridade": "Baixa",
-          "name": "teste-edit-2",
           "prazo": "2025-01-30",
-          "descricao": "descarte",
+          "descricao": "limpeza",
           "status": "Pendente",
           "members": [
-            "270f8d52-5384-4ac0-8219-e38a89c4b402",
-            "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
-            "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95"
+            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
           ],
-          "projectId": "47954e3d-3e52-40c9-b216-fdc8623f33da",
+          "projectId": "f07af6a3-dc4d-4422-a73c-78d3a506cea2",
           "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736571387590-Wendel _De Santana Santos _Curriculo.docx (1).pdf"
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618413183-creatina-probiotica-energia-muscular-recuperacao.webp",
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618413183-Wendel _De Santana Santos _Curriculo.docx (1).pdf",
+            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618413188-logo-project-semFundo.png"
           ],
-          "id": "6b33e65e-b943-4d7b-9d95-f8e1507276a7"
+          "id": "f07af6a3-dc4d-4422-a73c-78d3a506cea2",
+          "file": "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618376709-logo-project-semFundo.png",
+          "taskId": "f07af6a3-dc4d-4422-a73c-78d3a506cea2"
         }
       ],
       "services": [
