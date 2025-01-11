@@ -43,7 +43,8 @@ function TaskPage() {
 
     function edittask(task){
 
-        setMsg('')
+    setMsg('')
+    console.log('task',task)
 
       fetch(`http://localhost:5000/projects/tasks/${id}/edit`, {
         method:'PATCH',
@@ -58,6 +59,7 @@ function TaskPage() {
         settask(data)
         setShowtaskForm(false)
         setMsg('tarefa atualizado!')
+        console.log(data)
         setType('success')
       })
       .catch(
@@ -69,11 +71,7 @@ function TaskPage() {
         setShowtaskForm(prevState => !prevState);
     };
 
-    const handleAddtask = (formData) => {
-        console.log("Dados do formulário:", formData);
-    };
-
-    
+  
     function foramatarData(data) {
         const novaData = data.replace(/-/g, '/');
         return novaData
@@ -103,7 +101,7 @@ function TaskPage() {
                                 <TaskForm
                                     handleSubmit={edittask}
                                     btnText="Editar tarefa"
-                                    task={task}
+                                    projectData={task}
                                 />
                             </div>
                         )}

@@ -33,7 +33,7 @@ function Projeto() {
     function createService(newService) {
         setMsg(''); // Limpa a mensagem anterior
     
-        // Verifica se o projeto já tem serviços ou se precisa inicializar a lista
+     
         if (!project.services || project.services.length === 0) {
             project.services = [];
         }
@@ -60,6 +60,7 @@ function Projeto() {
                 formData.append('files', file);
             });
         }
+        
     
         // Verifica se o custo do novo serviço está dentro do orçamento do projeto
         const serviceCost = parseFloat(lastService.cost);
@@ -94,6 +95,42 @@ function Projeto() {
         .catch((erro) => {
             console.error('Erro ao adicionar serviço:', erro);
             setMsg('Erro ao adicionar serviço!');
+            setType('error');
+        });
+    }
+
+    function createTask(formData) {
+        setMsg(''); // Limpa a mensagem anterior
+    
+        // Verifica se o projeto já tem tarefas, se não, inicializa um array
+        if (!project.tasks || project.tasks.length === 0) {
+            project.tasks = [];
+        }
+    
+        // Atualiza o projeto com a nova tarefa
+        const updatedProject = {
+            ...project,
+            tasks: [...project.tasks, formData.get('task')], // Adiciona a tarefa ao projeto
+        };
+
+        console.log('Projeto atualizado:', updatedProject)
+    
+        // Envia o FormData com os dados da tarefa para o backend
+        fetch(`http://localhost:5000/projects/${project.id}/tasks`, {
+            method: 'POST',
+            body: formData, // Envia o FormData diretamente
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+            console.log('Tarefa criada com sucesso!', data);
+            setProject(data); // Atualiza o estado do projeto com os dados retornados
+            setTasks(data); // Atualiza a lista de tarefas
+            setMsg('Tarefa criada com sucesso!');
+            setType('success');
+        })
+        .catch((erro) => {
+            console.error('Erro ao adicionar tarefa:', erro);
+            setMsg('Erro ao adicionar tarefa!');
             setType('error');
         });
     }
@@ -218,53 +255,6 @@ function Projeto() {
                 setMsg('Erro ao remover serviço!');
                 setType('error');
             });
-    }
-
-    function createTask() {
-        setMsg(''); // Limpa a mensagem anterior
-    
-        console.log(project);
-    
-        if (!project.tasks || project.tasks.length === 0) {
-            project.tasks = [];
-        }
-    
-        const lastTask = project.tasks[project.tasks.length - 1] || {};
-        lastTask.id = uuidv4();
-    
-        // Cria um objeto FormData para enviar dados e arquivos
-        const formData = new FormData();
-    
-        // Adiciona os campos de texto da tarefa ao FormData
-        for (const key in lastTask) {
-            formData.append(key, lastTask[key]);
-        }
-    
-        // Adiciona os arquivos (se houver) ao FormData
-        if (lastTask.file && lastTask.file.length > 0) {
-            lastTask.file.forEach((file) => {
-                formData.append('file', file);
-            });
-        }
-    
-        // Envia a requisição ao backend para atualizar o projeto
-        fetch(`http://localhost:5000/projects/${project.id}`, {
-            method: 'PATCH',
-            body: formData,  // Envia o FormData que contém tanto os dados da tarefa quanto os arquivos
-        })
-        .then((resp) => resp.json())
-        .then((data) => {
-            console.log('Tarefa criada com sucesso!', data.tasks);
-            setProject(data); // Atualiza o projeto
-            setTasks(data.tasks); // Atualiza as tarefas
-            setMsg('Tarefa adicionada!');
-            setType('success');
-        })
-        .catch((erro) => {
-            console.error('Erro ao criar a tarefa:', erro);
-            setMsg('Erro ao adicionar tarefa!');
-            setType('error');
-        });
     }
 
     const restante = parseFloat(project.budget) - parseFloat(project.cost)

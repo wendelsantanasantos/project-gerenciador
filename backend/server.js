@@ -358,7 +358,6 @@ app.get("/services/:id", authMiddleware, async (req, res) => {
 });
 
 //Buscando Tasks
-
 app.get("/tasks/:id", authMiddleware, async (req, res) => {
   const { id: taskId } = req.params;
 
@@ -370,7 +369,6 @@ app.get("/tasks/:id", authMiddleware, async (req, res) => {
 
   console.log("Total de projetos:", db.projects.length);
 
- 
   let task;
   db.projects.some((project) => {
     task = project.tasks.find((t) => t.id === taskId);
@@ -382,11 +380,10 @@ app.get("/tasks/:id", authMiddleware, async (req, res) => {
     return res.status(404).json({ error: "Task não encontrada" });
   }
 
-  console.log("Serviço encontrado:", task);
+  console.log("Task encontrada:", task);
   res.status(200).json(task);
 
 });
-
 
 // Atualiza as informações de um projeto
 app.patch("/projects/:id", async (req, res) => {
@@ -496,8 +493,8 @@ app.post("/projects/:id/services", upload.array('files', 10), async (req, res) =
   }
 });
 
-// Atualiza as informações de um projeto
-app.patch("/projects/services /:id/edit", async (req, res) => {
+// Atualiza as informações de um  serviço
+app.patch("/projects/services/:id/edit", async (req, res) => {
 
     const { id: serviceId } = req.params;
     const updatedService = req.body;  // Dados para atualizar o serviço
@@ -546,9 +543,62 @@ app.patch("/projects/services /:id/edit", async (req, res) => {
       res.status(500).json({ error: "Erro ao salvar as alterações no serviço" });
     }
   });
+
+// Atualiza as informações de uma tarefa
+app.patch("/projects/tasks/:id/edit", async (req, res) => {
+  const { id: taskId } = req.params;
+  const updatedTask = req.body;  
+
+  console.log("Editando tarefa com ID:", taskId);
+
+  // Lendo o banco de dados do arquivo
+  try {
+    const data = await fs.readFile(dbPath, "utf-8");
+    const db = JSON.parse(data);
+
+    console.log("Total de projetos:", db.projects.length);
+
+    // Buscar o serviço dentro do projeto
+    let task;
+    let projectIndex;
+
+    db.projects.some((project, index) => {
+      task = project.tasks.find((s) => s.id === taskId);
+      if (task) {
+        projectIndex = index;
+        return true; // Encerra o loop quando a tarefa é encontrada
+      }
+    });
+
+    if (!task) {
+      console.log("Tarefa não encontrada");
+      return res.status(404).json({ error: "Tarefa não encontrada" });
+    }
+
+    // Atualizando a tarefa encontrada
+    db.projects[projectIndex].tasks = db.projects[projectIndex].tasks.map((s) =>
+      s.id === taskId ? { ...s, ...updatedTask } : s
+    );
+
+    // Salvar as alterações no banco de dados
+    await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+
+
+    // Retornar a tarefa atualizada
+    const updatedTaskFromDB = db.projects[projectIndex].tasks.find(
+      (s) => s.id === taskId
+    );
+
+    console.log("Tarefa atualizada com sucesso", updatedTaskFromDB);
+
+    res.status(200).json(updatedTaskFromDB);
+  } catch (err) {
+    console.error("Erro ao processar a requisição:", err);
+    res.status(500).json({ error: "Erro ao salvar as alterações na tarefa" });
+  }
+});
+
   
-
-
 // Deleta um serviço do projeto
 app.delete("/projects/:id/services/:serviceId", async (req, res) => {
   const { id, serviceId } = req.params;
@@ -588,6 +638,9 @@ app.post('/projects/:id/tasks', upload.array('file'), async (req, res) => {
   const { id } = req.params;
   const newTask = req.body;
 
+  console.log('Nova tarefa:', newTask);
+  
+
   // Adiciona os arquivos ao corpo da tarefa
   if (req.files) {
     newTask.files = req.files.map(file => file.path); // Salva os caminhos dos arquivos
@@ -620,7 +673,6 @@ app.post('/projects/:id/tasks', upload.array('file'), async (req, res) => {
     res.status(500).json({ message: "Erro ao processar a requisição", error: err.message });
   }
 });
-
 
 app.delete("/projects/:id/tasks/:taskId", async (req, res) => {
   const { id, taskId } = req.params;

@@ -9,13 +9,15 @@ function ServicePage() {
     const [service, setService] = useState(null);
     const [msg, setMsg] = useState('');
     const [type, setType] = useState('');
-    const [showServiceForm, setShowServiceForm] = useState(false); // Para controlar a exibição do formulário
-    const [isAdm, setIsAdm] = useState(false); // Estado inicial como 'false'
+    const [showServiceForm, setShowServiceForm] = useState(false);
+    const [isAdm, setIsAdm] = useState(false); 
+
+    const backendUrl = "http://localhost:5000"; // URL base do backend
 
     useEffect(() => {
-        // Verifica se o usuário é administrador assim que o componente é montado
+       
         const isAdmin = localStorage.getItem('isAdm') === 'true';
-        setIsAdm(isAdmin); // Atualiza o estado de isAdm
+        setIsAdm(isAdmin);
 
         // Faz a requisição para buscar o serviço
         fetch(`http://localhost:5000/services/${id}`, {
@@ -79,6 +81,14 @@ function ServicePage() {
         return novaData
     }
 
+    function isImage(fileName) {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
+        return imageExtensions.some(ext => fileName.toLowerCase().endsWith(ext));
+    }
+    function getFileName(filePath) {
+        return filePath.replace(/^.*[\\\/]/, '');
+    }
+
 
     return (
         <>
@@ -106,6 +116,42 @@ function ServicePage() {
                             </div>
                         )}
                     </div>
+
+                    <div>
+                             <p><strong>Arquivos Anexados:</strong></p>
+                             <div className={styles.filesContainer}>
+                                 {service.files && service.files.length > 0 ? (
+                                                    service.files.map((filePath, index) => {
+                                                        const fileName = getFileName(filePath)
+                                                        return (
+                                                            <div key={index} className={styles.filesCard}>
+                                                                {isImage(fileName) ? (
+                                                                    <img
+                                                                        src={`${backendUrl}/uploads/${fileName}`} // Usando o nome do arquivo
+                                                                        alt={`Imagem anexada ${index}`}
+                                                                        className={styles.previewImage}
+                                                                    />
+                                                                ) : fileName.toLowerCase().endsWith('.pdf') ? (
+                                                                    <div>
+                                                                        <p>{fileName}</p>
+                                                                        <iframe
+                                                                            src={`${backendUrl}/uploads/${fileName}`} // Usando o nome do arquivo
+                                                                            width="300"
+                                                                            height="400"
+                                                                            title={`Prévia do PDF ${index}`}
+                                                                        ></iframe>
+                                                                    </div>
+                                                                ) : (
+                                                                    <p>{fileName}</p> // Apenas exibe o nome do arquivo se não for imagem ou PDF
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    })
+                                                ) : (
+                                                    <p>Nenhum arquivo anexado</p>
+                                                )}
+                                            </div>
+                                        </div>
 
                 </div>
             ) : (

@@ -4,54 +4,55 @@ import SubmitBtn from '../formComponents/submit'
 import SearchBar from '../Layout/searchBar';
 import { VscAccount } from "react-icons/vsc";
 import Select from "../formComponents/select";
-
-
 import { IoShareOutline } from "react-icons/io5";
 import { useState } from 'react'
 
 function TasksForm({ handleSubmit, btnText, projectData }) {
 
-    const [task, setTask] = useState({prioridade  : ''});
+    const [task, setTask] = useState({prioridade: ''});
     const [file, setFile] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [members, setMembers] = useState([]); 
 
-
-
     const submit = (e) => {
         e.preventDefault();
-
-        if (!projectData.tasks) {
-            projectData.tasks = [];
+    
+        // Verifica se ao menos um membro foi selecionado
+        if (members.length === 0) {
+            alert('Por favor, escolha pelo menos um membro para a tarefa.');
+            return;
         }
-
+    
+        // Verifica se a tarefa tem um nome (você pode adicionar outras verificações, se necessário)
+        if (!task.name) {
+            alert('Por favor, insira o nome da tarefa.');
+            return;
+        }
+    
+        // Prepara o FormData para envio
         const formData = new FormData();
-
+    
+        // Adiciona os dados da tarefa no FormData
         for (const key in task) {
-            formData.append(key, task[key]);
+            if (task[key]) formData.append(key, task[key]);
         }
-
-        console.log('dados  enviados', projectData.id);
-
+    
+        // Adiciona os arquivos no FormData
         file.forEach(f => formData.append('file', f));
-
+    
+        // Adiciona os membros no FormData
         members.forEach(member => formData.append('members[]', member));
-
-        fetch(`http://localhost:5000/projects/${projectData.id}/tasks`, {
-            method: 'POST',
-            body: formData, 
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Tarefa criada:', data);
-            handleSubmit(data);  
-        })
-        .catch(error => {
-            console.error('Erro ao criar tarefa:', error);
-        });
+    
+        // Adiciona o ID do projeto
+        formData.append('projectId', projectData.id);
+    
+        console.log('Dados enviados para handleSubmit:', formData);
+        
+        // Envia os dados para a função handleSubmit
+        handleSubmit(formData);
     };
-
+    
     function handleChange(e) {
         if (e.target.type === "file") {
             const newFiles = Array.from(e.target.files); 
@@ -91,7 +92,6 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
     }
 
     const toggleMember = (userId) => {
-    
         setMembers((prevMembers) => {
             if (prevMembers.includes(userId)) {
                 return prevMembers.filter((id) => id !== userId);
@@ -109,61 +109,44 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
                 text="Prioridade da tarefa"
                 name="prioridade"
                 handleOnChange={handleChange}
-                options={[
-                    { id: 'Baixa', name: 'Baixa' },
-                    { id: 'Media', name: 'Media' },
-                    { id: 'Alta', name: 'Alta' },
-                ]}
+                options={[{ id: 'Baixa', name: 'Baixa' }, { id: 'Media', name: 'Media' }, { id: 'Alta', name: 'Alta' }]}
                 value={task.prioridade}
             />
 
             <Input type="date" text="Prazo da tarefa" name="prazo" placeholder="Insira o prazo da tarefa" handleOnChange={handleChange} />
-
             <Input type="text" text="Descrição da tarefa" name="descricao" placeholder="Insira a descrição da tarefa" handleOnChange={handleChange} />
 
             <Select 
                 text='Status da tarefa'
                 name='status'
                 handleOnChange={handleChange}
-                options={[
-                    {id: 'Pendente', name: 'Pendente'},
-                    {id: 'Em andamento', name: 'Em andamento'},
-                    {id: 'Concluida', name: 'Concluida'},
-                ]}
+                options={[{ id: 'Pendente', name: 'Pendente' }, { id: 'Em andamento', name: 'Em andamento' }, { id: 'Concluida', name: 'Concluida' }]}
                 value={task.status}/>
 
             <div className={styles.teamContainer}>
-    <div className={styles.searchBarContainer}>
-        <SearchBar handleSearch={searchUsers} />
-        {Array.isArray(filteredUsers) && filteredUsers.length > 0 ? (
-            filteredUsers.map((user) => (
-
-            <div  key={user.id}
-            className={`${styles.resultsList} ${members.includes(user.id) ? styles.memberAdded : ''}`}
-            onClick={() => toggleMember(user.id)}
-        >
-                <div className={styles.userHeader}>
-                    
-                    <div className={styles.avatarContainer}>
-                    {user.img ? <img src={`http://localhost:5000${user.img}`} alt={user.name} /> : <VscAccount /> }
-                    </div>
-
-                    <p>
-                    {user.name}
-                    </p>
+                <div className={styles.searchBarContainer}>
+                    <SearchBar handleSearch={searchUsers} />
+                    {Array.isArray(filteredUsers) && filteredUsers.length > 0 ? (
+                        filteredUsers.map((user) => (
+                            <div key={user.id}
+                                className={`${styles.resultsList} ${members.includes(user.id) ? styles.memberAdded : ''}`}
+                                onClick={() => toggleMember(user.id)}>
+                                <div className={styles.userHeader}>
+                                    <div className={styles.avatarContainer}>
+                                        {user.img ? <img src={`http://localhost:5000${user.img}`} alt={user.name} /> : <VscAccount />}
+                                    </div>
+                                    <p>{user.name}</p>
+                                </div>
+                                <span>{user.email}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p className={styles.noResults}></p>
+                    )}
                 </div>
-                <span>{user.email}</span>
-
             </div>
-            ))
-        ) : (
-            <p className={styles.noResults}></p>
-        )}
-    </div>
-                </div>
-            
+
             <input type="file" name="arquivo" multiple onChange={handleChange} id="arquivo" />
-    
             <label htmlFor="arquivo" className={styles.file_upload_btn}>
                 <span>Anexar arquivo</span>
                 <IoShareOutline />
@@ -176,20 +159,11 @@ function TasksForm({ handleSubmit, btnText, projectData }) {
                         file.map((file, index) => (
                             <div key={index} className={styles.filesCard}>
                                 {isImage(file) ? (
-                                    <img
-                                        src={URL.createObjectURL(file)}
-                                        alt={`Imagem anexada ${index}`}
-                                        className={styles.previewImage}
-                                    />
+                                    <img src={URL.createObjectURL(file)} alt={`Imagem anexada ${index}`} className={styles.previewImage} />
                                 ) : file.type === "application/pdf" ? (
                                     <div>
                                         <p>{file.name}</p>
-                                        <iframe
-                                            src={URL.createObjectURL(file)}
-                                            width="300"
-                                            height="400"
-                                            title="Prévia do PDF"
-                                        ></iframe>
+                                        <iframe src={URL.createObjectURL(file)} width="300" height="400" title="Prévia do PDF"></iframe>
                                     </div>
                                 ) : file.type.startsWith("audio/") ? (
                                     <div>
