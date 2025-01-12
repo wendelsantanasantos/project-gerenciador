@@ -26,11 +26,46 @@ function ProjectCard({
     const novaData = data.replace(/-/g, '/');
     return novaData
 }
+function formatStatus(status) {
+  const statusMap = {
+    planejando: "Planejando",
+    "aguardando-aprovacao": "Aguardando aprovação",
+    pendente: "Pendente",
+    "em-andamento": "Em andamento",
+    "em-revisao": "Em revisão",
+    concluido: "Concluído",
+  };
+
+  return statusMap[status?.toLowerCase()] || "Pendente"; // Retorna "Pendente" por padrão
+}
+
+
 
   const remove = (e) => {
     e.preventDefault();
     handleRemove(id);
   };
+
+  const getProgress = (status) => {
+    switch (status) {
+      case "Planejando":
+        return { progress: 10, label: "Planejando" };
+      case "Aguardando-aprovacao":
+        return { progress: 20, label: "Aguardando aprovação" };
+      case "Pendente":
+        return { progress: 30, label: "Pendente" };
+      case "Em-andamento":
+        return { progress: 60, label: "Em andamento" };
+      case "Em-revisao":
+        return { progress: 80, label: "Em revisão" };
+      case "Concluido":
+        return { progress: 100, label: "Concluído" };
+      default:
+        return { progress: 0, label: "Não iniciado" };
+    }
+  };
+  
+  const { progress, label } = getProgress(status);
   
   return (
     <div  onClick={redirect}
@@ -41,8 +76,9 @@ function ProjectCard({
       <h4>{name}</h4>
 
       <div className={style.projectCard_status}>
-        <p>{status || "Pendente"}</p>
-      </div>
+  <p>{formatStatus(status)}</p>
+</div>
+
 
       <div  className={style.projectCard_info}>
       <p>
@@ -60,15 +96,16 @@ function ProjectCard({
       <div className={style.projectCard_progress}>
         <p>Progress:</p>
         
-      <ProgressBar
-      
-        completed={status === "Concluido" ? 100 : 70}
-        customLabel={status === "Concluido" ? "Concluido!" : ""}
-        bgColor="#222"
-        baseBgColor="#cadfe2"
-        width="100%"
-        margin-top="2em"
-      />
+       
+<ProgressBar
+  completed={progress}
+  customLabel={label+'%'}
+  bgColor="#222"
+  baseBgColor="#cadfe2"
+  width="100%"
+  style={{ marginTop: "2em" }}
+/>;
+
       </div>
 
       <div className={style.projectCard_actions}>

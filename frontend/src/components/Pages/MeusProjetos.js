@@ -86,6 +86,7 @@ function MeusProjetos() {
               budget={project.budget}
               category={project.category}
               handleRemove={removerProjeto}
+              status={project.status}
             />
           ))
         ) : !removeLoading ? (

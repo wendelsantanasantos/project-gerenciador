@@ -33,16 +33,28 @@
     width: auto;
 }
 
+.planejando .projectCard_status p {
+    background-color: #ffff8a;
+}
+
+.aguardando-aprovacao .projectCard_status p {
+    background-color: #f59696;
+}
+
 .pendente .projectCard_status p {
     background-color: #007bff;
 }
 
-.andamento .projectCard_status p {
+.em-andamento .projectCard_status p {
     background-color: #ffc107;
 }
 
+.em-revisao .projectCard_status p {
+    background-color: #28a77d;
+}
+
 .concluido .projectCard_status p {
-    background-color: #28a745;
+    background-color: #11b619;
 }
 
 .projectCard h4 {

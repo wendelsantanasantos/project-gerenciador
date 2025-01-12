@@ -16,6 +16,18 @@ transform: translateY(-5px);
 box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
+
+.pendente{
+   border-left:5px solid #eb3204;
+}
+.em-andamento{
+    border-left:5px solid #f7f30f;
+}
+.concluido{
+    border-left:5px solid #17d620;
+}
+
+
 .taskHeader{
    display: flex;
    align-items: center;

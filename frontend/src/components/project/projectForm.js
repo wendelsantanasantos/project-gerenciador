@@ -11,7 +11,8 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
     const [project, setProject] = useState(projectData || { name: '', budget: 0, category: { id: '', name: '' } });
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const [members, setMembers] = useState([]); 
+    const [members, setMembers] = useState(projectData?.members || []);
+
 
     useEffect(() => {
         // Fetch categories from the server
@@ -45,6 +46,21 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
         
         handleSubmit(projectWithMembers);
       };
+
+      const statusOptions = [
+        'Planejando',
+        'Aguardando aprovação',
+        'Pendente',
+        'Em andamento',
+        'Em revisão',
+        'Concluído',
+      ].map((status) => ({
+        id: status.toLowerCase().replace(/ /g, '-').normalize('NFD').replace(/[\u0300-\u036f]/g, ''), // Remove acentos e formata para URL-friendly
+        name: status,
+      }));
+      
+     
+      
       
 
     const handleChange = (e) => {
@@ -140,6 +156,14 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
                         options={categories}
                         value={project.category ? project.category.id : ''}
                     />
+
+            <Select
+                   text="Status do projeto"
+                      name="status"
+              handleOnChange={handleChange}
+        options={statusOptions}
+        value={project.status || ''}
+      />
                 </div>
 
                 <div className={style.dataContainer}>

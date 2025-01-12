@@ -19,7 +19,9 @@ function Tasks({ id, name, cost, descricao, prioridade, prazo, responsaveis, sta
     }
 
     return (
-        <div className={styles.Task} onClick={redirect}>
+        <div  className={`${styles.Task} ${
+              styles[(status ? status.toLowerCase() : "pendente").toLowerCase()]
+            }`} onClick={redirect}>
             <div className={styles.taskHeader}>
                 <h4>{name}</h4>
                 <div className={styles.statusTask}>

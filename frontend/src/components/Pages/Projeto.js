@@ -198,35 +198,46 @@ function Projeto() {
     
     
 
-    function editProject(project){
-
-        setMsg('')
-
-      if(project.budget < project.cost){
-        setMsg('O orçamento não pode ser menor que o custo do projeto!')
-        setType('error')
-        return
-      }
-      fetch(`http://localhost:5000/projects/${project.id}`, {
-        method:'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(project),
-        credentials: 'include'
-      })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setProject(data)
-        setShowProjectForm(false)
-        setMsg('Projeto atualizado!')
-        setType('success')
-      })
-      .catch(
-        (erro) => console.log(erro))
+    function editProject(project) {
+        setMsg('');
       
-    }
-
+        // Validação do orçamento
+        if (project.budget < project.cost) {
+          setMsg('O orçamento não pode ser menor que o custo do projeto!');
+          setType('error');
+          return;
+        }
+      
+        // Chamada para a API
+        fetch(`http://localhost:5000/projects/${project.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(project),
+          credentials: 'include',
+        })
+          .then((resp) => {
+            // Verifica se a resposta foi bem-sucedida
+            if (!resp.ok) {
+              throw new Error(`Erro na API: ${resp.status} - ${resp.statusText}`);
+            }
+            return resp.json();
+          })
+          .then((data) => {
+            setProject(data);
+            setMsg('Projeto atualizado com sucesso!');
+            setType('success');
+            setShowProjectForm(false)
+   
+          })
+          .catch((erro) => {
+            console.error(erro);
+            setMsg('Erro ao atualizar o projeto. Tente novamente mais tarde.');
+            setType('error');
+          });
+      }
+      
     function removeService(id, cost) {
         setMsg('');
     
@@ -318,6 +329,20 @@ function Projeto() {
         return novaData
     }
 
+    function formatStatus(status) {
+        const statusMap = {
+          planejando: "Planejando",
+          "aguardando-aprovacao": "Aguardando aprovação",
+          pendente: "Pendente",
+          "em-andamento": "Em andamento",
+          "em-revisao": "Em revisão",
+          concluido: "Concluído",
+        };
+      
+        return statusMap[status?.toLowerCase()] || "Pendente"; // Retorna "Pendente" por padrão
+      }
+      
+
    
     return (
         <>{project.name ? (
@@ -342,6 +367,12 @@ function Projeto() {
                             <span>Categoria: </span>{project.category.name}
                            </p> 
 
+                           <p>
+                            <span>Status: </span> {formatStatus(project.status)}
+                           </p>
+                            <p>
+                            <span>Descrição: </span> {project.description}
+                            </p>
                            <p>
                             <span>Total de Orçamento: </span> R$ {project.budget}
                            </p>

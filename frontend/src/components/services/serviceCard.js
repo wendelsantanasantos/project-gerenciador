@@ -7,7 +7,6 @@ function ServiceCard({ id, name, cost, description, isAdm }) {
 
   useEffect(() => {
     if (isAdm !== undefined) {
-      console.log('isAdm:', isAdm);
       localStorage.setItem('isAdm', isAdm);  // Armazena no localStorage
     }
   }, [isAdm]);

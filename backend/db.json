@@ -1,18 +1,19 @@
 {
   "projects": [
     {
-      "name": "plantar-milho",
-      "budget": "2000",
+      "name": "plantar-milho-mexicano",
+      "budget": "20000",
       "category": {
         "id": "4",
         "name": "infraestrutura"
       },
-      "description": "milho",
+      "description": "milho-plantado",
       "start_date": "2025-01-09",
       "end_date": "2025-02-08",
       "members": [
-        "270f8d52-5384-4ac0-8219-e38a89c4b402",
-        "e46572c9-4ff4-4b11-bc2e-35b1647650a4"
+        "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
+        "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
+        "270f8d52-5384-4ac0-8219-e38a89c4b402"
       ],
       "cost": 1666,
       "tasks": [
@@ -99,7 +100,7 @@
         }
       ],
       "id": "47954e3d-3e52-40c9-b216-fdc8623f33da",
-      "status": "Em andamento",
+      "status": "em-andamento",
       "userId": "270f8d52-5384-4ac0-8219-e38a89c4b402",
       "isAdm": true
     }

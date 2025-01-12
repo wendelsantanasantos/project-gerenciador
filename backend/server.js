@@ -384,28 +384,48 @@ app.get("/tasks/:id", authMiddleware, async (req, res) => {
   res.status(200).json(task);
 
 });
-
 // Atualiza as informações de um projeto
 app.patch("/projects/:id", async (req, res) => {
-
- console.log('serviço criado')
+  console.log("Recebida uma requisição para atualizar um projeto");
 
   const { id } = req.params;
   const updatedProject = req.body;
- 
 
   try {
+    // Lê o banco de dados
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
 
-    // Encontre o serviço dentro do projeto usando o serviceId
-    const service = project.services.find((service) => service.id === serviceId);
+    // Busca o projeto pelo ID
+    const projectIndex = db.projects.findIndex(
+      (project) => String(project.id) === id
+    );
+
+    if (projectIndex === -1) {
+      return res.status(404).json({ message: "Projeto não encontrado" });
+    }
+
+    // Atualiza o projeto
+    db.projects[projectIndex] = {
+      ...db.projects[projectIndex],
+      ...updatedProject,
+    };
+
+    // Grava as alterações no banco de dados
+    await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+
+    const project = db.projects[projectIndex];
+
+    // Retorna o projeto atualizado
+    console.log("Projeto atualizado com sucesso");
+    res.status(200).json(project);
 
   } catch (err) {
     console.error("Erro ao processar a requisição:", err);
-    res.status(500).json("Erro ao salvar as alterações no projeto");
+    res.status(500).json({ message: "Erro ao salvar as alterações no projeto" });
   }
 });
+
 
 // Deleta um projeto
 app.delete("/projects/:id", async (req, res) => {
