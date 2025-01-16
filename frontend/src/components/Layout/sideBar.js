@@ -10,7 +10,7 @@ import { BsBriefcaseFill } from "react-icons/bs";
 import { BsBoxes } from "react-icons/bs";
 import { TbMessage } from "react-icons/tb";
 import Fade from './Fade';
-
+import { useLocation } from "react-router-dom";
 
 
 
@@ -18,11 +18,16 @@ import Fade from './Fade';
 
 function SideBar() {
 
+  const location = useLocation();
+
   const [showMenu, setShowMenu] = useState(false);
 
   function showMenuBtn() {
     setShowMenu(!showMenu);
   }
+    if (location.pathname === "/") {
+      return null;
+    }
 
     return (
       <>
