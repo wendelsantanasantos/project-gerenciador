@@ -2,10 +2,18 @@ import styles from './Home.module.css'
 import LinkButton from '../Layout/LinkButton'
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo} from "../../img/logo-project-semFundo.svg";
+import { useEffect } from 'react';
+import { initParticles } from '../Layout/Particles'; 
 
-function Home(){
-    return(
+function Home() {
+    useEffect(() => {
+        initParticles(); 
+    }, []);
+
+    return (
         <section className={styles.home_container}>
+            <canvas id="particles-js" className={styles.particles_canvas}></canvas>
+            
             <div className={styles.text_section}>
                 <h1>TRABALHE <span>ONLINE</span></h1>
                 <h2>Trabalhe de Casa</h2>
@@ -21,7 +29,7 @@ function Home(){
                 </Link>
             </div>
         </section>
-    )
+    );
 }
 
-export default Home
+export default Home;
