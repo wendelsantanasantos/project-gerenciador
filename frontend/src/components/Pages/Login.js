@@ -5,6 +5,9 @@ import SubmitBtn from "../formComponents/submit";
 import { useState } from "react";
 import { BsEyeFill } from "react-icons/bs";
 import { BsEyeSlashFill } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+
+
 
 function Login({ handleSubmit, btnText, userData }) {
   const [user, setUser] = useState(userData || { email: "", password: "" });
@@ -59,6 +62,10 @@ function Login({ handleSubmit, btnText, userData }) {
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/auth/google";
+  };
+
   function togglePasswordVisibility(e) {
     e.preventDefault();
     setShowPassword(!showPassword);
@@ -67,6 +74,9 @@ function Login({ handleSubmit, btnText, userData }) {
   return (
     <div className={styles.login}>
       <h1>Login</h1>
+
+  
+
       <form onSubmit={Submit}>
         <Input
           type="email"
@@ -94,6 +104,13 @@ function Login({ handleSubmit, btnText, userData }) {
 
         <SubmitBtn text="Entrar" />
       </form>
+
+     
+                    <div className={styles.google} onClick={handleGoogleLogin}>
+                       <p><FcGoogle />Google</p>
+                    </div>
+                
+              
       {msg && <p className={styles.msg}>{msg}</p>}
       <p>
         Não possui uma conta? <Link to="/CadastroUser">Cadastre-se</Link>

@@ -21,6 +21,27 @@
       "id": "21212541-2502-41b0-9a76-2e75cd49d6ae",
       "userId": "270f8d52-5384-4ac0-8219-e38a89c4b402",
       "isAdm": true
+    },
+    {
+      "name": "Wendel de Santana Santos",
+      "budget": "100",
+      "category": {
+        "id": "2",
+        "name": "Design"
+      },
+      "description": "we",
+      "start_date": "2025-01-22",
+      "end_date": "2025-01-22",
+      "status": "em-andamento",
+      "members": [
+        "113120712665920315538"
+      ],
+      "cost": 0,
+      "tasks": [],
+      "services": [],
+      "id": "ea446a52-8809-4b66-91af-a60bd457517b",
+      "userId": "113120712665920315538",
+      "isAdm": true
     }
   ],
   "categories": [
@@ -72,6 +93,12 @@
       "email": "Gustavo@Gu.com",
       "password": "$2b$10$A5kDYJ2Kcywlb6BcMzNhwusDz4WejIaK9nI5sRPwSnF0rqQAIPZWy",
       "id": "e46572c9-4ff4-4b11-bc2e-35b1647650a4"
+    },
+    {
+      "id": "113120712665920315538",
+      "name": "Wendel Santana Santos",
+      "email": "contact.wendel.santana@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocJMtdVsoHzfb_aHJmwvEYIaGEoonTbXxeXhQw6Xr1eXyEd1C7Y=s96-c"
     }
   ]
 }

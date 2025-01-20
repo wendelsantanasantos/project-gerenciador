@@ -7,12 +7,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
+const passport = require("./authGoogle");
 
 const app = express();
 const port = 5000;
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(passport.initialize());
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true })); // CORS para o frontend
 app.use(cookieParser());
@@ -104,7 +106,7 @@ function generateToken(userId) {
   return jwt.sign({ id: userId }, secretKey, { expiresIn: "10h" });
 }
 
-
+// Rota para cadastro de usuário
 app.post("/CadastroUser", upload.single("imgPerson"), async (req, res) => {
   try {
     const newUser = req.body;
@@ -115,34 +117,40 @@ app.post("/CadastroUser", upload.single("imgPerson"), async (req, res) => {
       return res.status(400).json({ message: "Preencha todos os campos obrigatórios." });
     }
 
+    // Verificar se o email já está registrado
+    const data = await fs.readFile(dbPath, "utf-8");
+    const db = JSON.parse(data);
+
+    const userExists = db.users && db.users.find((user) => user.email === newUser.email);
+    if (userExists) {
+      return res.status(400).json({ message: "Email já está em uso." });
+    }
+
+    // Se o usuário enviou uma imagem, adiciona a URL da imagem
     if (req.file) {
       newUser.img = `/uploads/${req.file.filename}`;
     }
 
-    // Leitura e escrita no db.json
-    const data = await fs.readFile(dbPath, "utf-8");
-    const db = JSON.parse(data);
-
-    if (!db.users) {
-      db.users = [];
-    }
-
-    // Criptografia de senha
+    // Criptografando a senha
     const senhaCriptografada = await bcrypt.hash(newUser.password, 10);
     newUser.password = senhaCriptografada;
 
+    // Adiciona o novo usuário ao banco de dados
+    if (!db.users) {
+      db.users = [];
+    }
     db.users.push(newUser);
 
     // Salvando no db.json
     await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
 
-    const token = jwt.sign({ id: newUser.id }, secretKey, { expiresIn: "10h" });
+    const token = generateToken(newUser.id);
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 3600000, 
+      maxAge: 3600000,
     });
 
     res.status(200).json({ message: "Cadastro realizado com sucesso!", newUser });
@@ -152,56 +160,69 @@ app.post("/CadastroUser", upload.single("imgPerson"), async (req, res) => {
   }
 });
 
-//Login
+// Rota de login
 app.post("/Login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Recebido para login:", email, password); // Log para ver o email e senha recebidos
 
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
 
     const user = db.users.find((user) => user.email === email);
-    console.log("Usuário encontrado no banco:", user); // Log para verificar o usuário encontrado
-
     if (!user) {
       return res.status(401).json({ message: "Usuário não encontrado" });
     }
 
-    // Verificando a senha
-    console.log("Verificando a senha do usuário", user.password);
-
+    // Verificar se a senha está correta
     const senhaCorreta = await bcrypt.compare(password, user.password);
     if (!senhaCorreta) {
-      console.log("Senha incorreta");
       return res.status(401).json({ message: "Usuário ou senha incorretos" });
     }
 
-    // Gerar o token
-
-    console.log("Usuário autenticado com sucesso! ID:", user.id);
-
     const token = generateToken(user.id);
-    console.log("Token gerado:", token); // Log para ver o token gerado
 
-    // Setando o cookie com o token
     res.cookie("token", token, {
       httpOnly: true,
       secure: false, // Alterar para true em produção com HTTPS
       sameSite: "Strict",
       path: "/",
-      maxAge: 36000000, // Tempo de expiração do cookie
+      maxAge: 36000000,
     });
 
-    console.log("Cookie token setado com sucesso;");
     res.status(200).json({ message: "Usuário logado com sucesso" });
   } catch (err) {
     console.error("Erro ao processar a requisição:", err);
-    res
-      .status(500)
-      .json({ message: "Erro ao processar a requisição", error: err.message });
+    res.status(500).json({ message: "Erro ao processar a requisição", error: err.message });
   }
 });
+
+// Rota para iniciar login com o Google
+app.get(
+  "/auth/google",
+  (req, res, next) => {
+    console.log("Rota /auth/google acessada");
+    next(); // Passa para o próximo middleware (passport.authenticate)
+  },
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+
+// Callback do Google após login
+app.get("/auth/google/callback",
+  passport.authenticate("google", { session: false }),
+  (req, res) => {
+    const user = req.user;
+
+    // Gera um token JWT para o usuário
+    const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
+      expiresIn: "10h",
+    });
+
+    // Define o token no cookie
+    res.cookie("token", token, { httpOnly: true });
+    res.redirect(`http://localhost:3000/login/success?token=${token}`);
+  }
+);
 
 // Rota para obter todos os projetos
 app.get("/projects", authMiddleware, async (req, res) => {
@@ -225,6 +246,8 @@ app.get("/projects", authMiddleware, async (req, res) => {
     res.status(500).json("Erro ao ler o arquivo db.json");
   }
 });
+
+
 
 // Rota para obter os projetos compartilhados
 app.get("/projects/team", authMiddleware, async (req, res) => {
