@@ -11,6 +11,9 @@ import Tasks from '../tasks/tasks';
 import Mensagem from "../Layout/Mensagem";
 import { VscAccount } from "react-icons/vsc";
 import { useNavigate } from 'react-router-dom'
+import { ImBin } from "react-icons/im";
+import { Navigate } from 'react-router-dom';
+
 
 
 function Projeto() {
@@ -27,100 +30,122 @@ function Projeto() {
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [msg, setMsg] = useState('')
     const [type, setType] = useState('')
-
     const navigate = useNavigate()
 
+
     function createService(newService) {
-        setMsg(''); // Limpa a mensagem anterior
+        setMsg('');
     
-     
-        if (!project.services || project.services.length === 0) {
-            project.services = [];
+        // Validação básica dos campos obrigatórios
+        if (!newService.name || !newService.cost) {
+            setMsg('Preencha todos os campos obrigatórios!');
+            setType('error');
+            return;
         }
     
-        // Cria um novo serviço com um ID único
+        // Inicializa serviços, se necessário
+        const projectServices = project.services || [];
+    
+        // Criação do novo serviço
         const lastService = {
             ...newService,
-            id: uuidv4(),  // Gera um ID único para o serviço
+            id: uuidv4(),
         };
     
-        // Cria um FormData para enviar os dados
+        // Prepara o FormData para envio
         const formData = new FormData();
-    
-        // Adiciona os dados do serviço ao FormData
         for (const key in lastService) {
             if (lastService[key]) {
                 formData.append(key, lastService[key]);
             }
         }
-    
-        // Se houver arquivos para enviar, adiciona ao FormData
         if (newService.files && newService.files.length > 0) {
             newService.files.forEach((file) => {
                 formData.append('files', file);
             });
         }
-        
     
-        // Verifica se o custo do novo serviço está dentro do orçamento do projeto
+        // Calcula o novo custo do projeto
         const serviceCost = parseFloat(lastService.cost);
         const newCost = parseFloat(project.cost) + serviceCost;
-        
+    
         if (newCost > parseFloat(project.budget)) {
             setMsg('Orçamento ultrapassado, verifique o valor do serviço');
             setType('error');
             return;
         }
     
-        // Atualiza o projeto com o novo custo
+        // Atualiza o projeto localmente
         const updatedProject = {
             ...project,
-            cost: newCost, // Atualiza o custo total do projeto
-            services: [...project.services, lastService], // Adiciona o novo serviço à lista de serviços
+            cost: newCost,
+            services: [...projectServices, lastService],
         };
     
-        // Faz a requisição POST para adicionar o serviço
+        // Envio para o servidor
         fetch(`http://localhost:5000/projects/${project.id}/services`, {
-            method: 'POST', // Usando POST para criar um novo serviço
-            body: formData, // Envia os dados como FormData, incluindo arquivos
+            method: 'POST',
+            body: formData,
+        })
+            .then((resp) => {
+                if (!resp.ok) {
+                    throw new Error('Erro na comunicação com o servidor');
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                console.log('Serviço criado com sucesso!', data.services);
+                setProject(data); // Atualiza o estado do projeto
+                setServices(data.services); // Atualiza a lista de serviços
+                setMsg('Serviço criado com sucesso!');
+                setType('success');
+            })
+            .catch((error) => {
+                console.error('Erro ao adicionar serviço:', error);
+                setMsg('Erro ao adicionar serviço!');
+                setType('error');
+            });
+    }
+    
+
+    function removeProject(id) {
+        fetch(`http://localhost:5000/projects/${id}/remove`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
         .then((resp) => resp.json())
-        .then((data) => {
-            console.log('Serviço criado com sucesso!', data.services);
-            setProject(data); // Atualiza o estado com os dados do projeto atualizados
-            setServices(data.services); // Atualiza a lista de serviços
-            setMsg('Serviço criado com sucesso!');
-            setType('success');
+        .then(() => {
+            console.log('Projeto removido com sucesso!');
+            navigate('/MeusProjetos', {state: {msg: 'Projeto removido com sucesso!'}})
         })
         .catch((erro) => {
-            console.error('Erro ao adicionar serviço:', erro);
-            setMsg('Erro ao adicionar serviço!');
+            console.error('Erro ao remover projeto:', erro);
+            setMsg('Erro ao remover projeto!');
             setType('error');
+            
         });
     }
 
     function createTask(formData) {
-        setMsg(''); // Limpa a mensagem anterior
+        setMsg(''); 
 
         console.log("Dados do FormData na  tarefaPage:");
         for (const [key, value] of formData.entries()) {
             console.log(`${key}:`, value);
         }
     
-        // Verifica se o projeto já tem tarefas, se não, inicializa um array
         if (!project.tasks || project.tasks.length === 0) {
             project.tasks = [];
         }
-    
-        // Atualiza o projeto com a nova tarefa
-        const updatedProject = {
+            const updatedProject = {
             ...project,
-            tasks: [...project.tasks, formData.get('task')], // Adiciona a tarefa ao projeto
+            tasks: [...project.tasks, formData.get('task')], 
         };
 
         console.log('Projeto atualizado:', updatedProject)
     
-        // Envia o FormData com os dados da tarefa para o backend
         fetch(`http://localhost:5000/projects/${project.id}/tasks`, {
             method: 'POST',
             body: formData, // Envia o FormData diretamente
@@ -238,70 +263,9 @@ function Projeto() {
           });
       }
       
-    function removeService(id, cost) {
-        setMsg('');
-    
-        const parsedCost = parseFloat(cost) || 0; // Garantir que cost seja numérico
-    
-        const servicesUpdated = project.services.filter(
-            (service) => service.id !== id
-        );
-    
-        const projectUpdated = { ...project }; // Crie uma cópia do projeto
-        projectUpdated.services = servicesUpdated;
-        projectUpdated.cost = parseFloat(projectUpdated.cost || 0) - parsedCost;
-    
-        fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(projectUpdated),
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                setProject(projectUpdated);
-                setServices(servicesUpdated);
-                setMsg('Serviço removido!');
-                setType('success');
-            })
-            .catch((erro) => {
-                console.log(erro);
-                setMsg('Erro ao remover serviço!');
-                setType('error');
-            });
-    }
-
+   
     const restante = parseFloat(project.budget) - parseFloat(project.cost)
     
-        
-     function removeTask(id) {
-            setMsg('');
-        
-            fetch(`http://localhost:5000/projects/${project.id}/tasks/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then((resp) => {
-                if (!resp.ok) {
-                    throw new Error('Erro na remoção da tarefa');
-                }
-                return resp.json();
-            })
-            .then((data) => {
-                setProject(data);
-                setTasks(data.tasks);
-                setMsg('Tarefa removida!');
-                setType('success');
-            })
-            .catch((error) => {
-                console.error(error);
-                setMsg('Erro ao remover tarefa!');
-                setType('error');
-            });
-        }
 
      function teamMembers(id) {
             setMsg('');
@@ -354,7 +318,13 @@ function Projeto() {
 
                     <h1>Projeto:{project.name}</h1>
                     {isAdm  && (
-                          <button className={styles.btn} onClick={toggleProjectForm}>{!showProjectForm ? 'Editar Projeto' : 'Fechar'}</button>
+                          <div><button className={styles.btn} onClick={toggleProjectForm}>{!showProjectForm ? 'Editar Projeto' : 'Fechar'}</button>
+
+                            <button className={styles.btn} onClick={removeProject}>{'Excluir Projeto'}</button>
+                          
+                          </div>
+
+                          
                     )}
                    
                      
@@ -418,7 +388,6 @@ function Projeto() {
                     files={task.files}
                     responsaveis={responsaveis.join(', ')}  // Concatena os nomes dos responsáveis
                     key={task.id}
-                    handleRemove={removeTask}
                 />
             );
         })
@@ -459,7 +428,6 @@ function Projeto() {
                             cost={service.cost}
                             description={service.description}
                             key={service.id}
-                            handleRemove={removeService}
                             isAdm={isAdm}
                             />
 

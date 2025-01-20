@@ -428,7 +428,7 @@ app.patch("/projects/:id", async (req, res) => {
 
 
 // Deleta um projeto
-app.delete("/projects/:id", async (req, res) => {
+app.delete("/projects/:id/remove", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -622,25 +622,31 @@ app.patch("/projects/tasks/:id/edit", upload.array('file' ), async (req, res) =>
   
  
 // Deleta um serviço do projeto
-app.delete("/projects/:id/services/:serviceId", async (req, res) => {
-  const { id, serviceId } = req.params;
+app.delete("/projects/services/:serviceId/remove", async (req, res) => {
+  const { serviceId } = req.params;
 
   try {
     const data = await fs.readFile(dbPath, "utf-8");
     const db = JSON.parse(data);
-    const project = db.projects.find((p) => p.id === id);
+    
+    let service
+    let projectIndex;
 
-    if (!project) {
-      return res.status(404).json("Projeto não encontrado");
+    db.projects.some((project, index) => {
+      service = project.services.find((s) => s.id === serviceId);
+      if (service) {
+        projectIndex = index;
+        return true;
+      }
+    });
+
+    if (!service) {
+      return res.status(404).json({ error: "Serviço não encontrado" });
     }
 
-    const serviceIndex = project.services.findIndex(
-      (service) => service.id === serviceId
-    );
-
-    if (serviceIndex === -1) {
-      return res.status(404).json("Serviço não encontrado");
-    }
+    // Remover o serviço do projeto
+    const project = db.projects[projectIndex];
+    const serviceIndex = project.services.findIndex((s) => s.id === serviceId);
 
     const removedService = project.services[serviceIndex];
     project.services.splice(serviceIndex, 1);

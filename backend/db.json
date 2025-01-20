@@ -1,106 +1,24 @@
 {
   "projects": [
     {
-      "name": "plantar-milho-mexicano",
-      "budget": "20000",
+      "name": "construção",
+      "budget": "10000",
       "category": {
         "id": "4",
         "name": "infraestrutura"
       },
-      "description": "milho-plantado",
-      "start_date": "2025-01-09",
-      "end_date": "2025-02-08",
+      "description": "Construção do colégio estadual de igaporã",
+      "status": "em-revisao",
+      "start_date": "2025-01-22",
+      "end_date": "2025-01-31",
       "members": [
-        "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
-        "7cb91fe0-df89-4650-94d7-18eb5ecc0749",
-        "270f8d52-5384-4ac0-8219-e38a89c4b402"
+        "270f8d52-5384-4ac0-8219-e38a89c4b402",
+        "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
       ],
-      "cost": 1666,
-      "tasks": [
-        {
-          "name": "teste-arquivos-2-teste",
-          "prioridade": "Alta",
-          "prazo": "2025-01-18",
-          "descricao": "descarte",
-          "status": "Pendente",
-          "members": [
-            "6d1fcd71-f8ff-43f5-b9f8-7de40d125f95",
-            "270f8d52-5384-4ac0-8219-e38a89c4b402",
-            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
-          ],
-          "projectId": "b5d41ef3-3075-4e6c-9d55-54e61a4a8e8c",
-          "files": [],
-          "id": "b5d41ef3-3075-4e6c-9d55-54e61a4a8e8c",
-          "file": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736615785857-creatina-probiotica-energia-muscular-recuperacao.webp",
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736615785858-logo-project-semFundo.png"
-          ],
-          "taskId": "b5d41ef3-3075-4e6c-9d55-54e61a4a8e8c"
-        },
-        {
-          "name": "teste-edit-arquivos-1",
-          "prioridade": "Baixa",
-          "prazo": "2025-01-22",
-          "descricao": "descarte",
-          "status": "Em andamento",
-          "members": [
-            "270f8d52-5384-4ac0-8219-e38a89c4b402",
-            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
-          ],
-          "projectId": "3de5397a-e273-4a49-98ca-a5c4381ab987",
-          "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618299629-creatina-probiotica-energia-muscular-recuperacao.webp",
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618299630-logo-project-semFundo.png"
-          ],
-          "id": "3de5397a-e273-4a49-98ca-a5c4381ab987",
-          "file": "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736615742331-creatina-probiotica-energia-muscular-recuperacao.webp",
-          "taskId": "3de5397a-e273-4a49-98ca-a5c4381ab987"
-        },
-        {
-          "name": "teste-miniaturafile",
-          "prioridade": "Baixa",
-          "prazo": "2025-01-30",
-          "descricao": "limpeza",
-          "status": "Pendente",
-          "members": [
-            "7cb91fe0-df89-4650-94d7-18eb5ecc0749"
-          ],
-          "projectId": "f07af6a3-dc4d-4422-a73c-78d3a506cea2",
-          "files": [
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618413183-creatina-probiotica-energia-muscular-recuperacao.webp",
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618413183-Wendel _De Santana Santos _Curriculo.docx (1).pdf",
-            "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618413188-logo-project-semFundo.png"
-          ],
-          "id": "f07af6a3-dc4d-4422-a73c-78d3a506cea2",
-          "file": "C:\\Users\\wendel\\Desktop\\programaçao\\curso React\\Projeto do Curso\\project-gerenciador\\backend\\uploads\\1736618376709-logo-project-semFundo.png",
-          "taskId": "f07af6a3-dc4d-4422-a73c-78d3a506cea2"
-        }
-      ],
-      "services": [
-        {
-          "id": "46748d71-bcaf-44ec-824f-f4c5514329db",
-          "name": "teste-edit-1",
-          "cost": "100",
-          "description": "tudo,isso",
-          "date": "2025-01-30"
-        },
-        {
-          "id": "dbe2e048-e69a-40fe-9c6c-092f788529ab",
-          "name": "teste-2",
-          "cost": "222",
-          "description": "tudo,isso",
-          "date": "2025-01-21"
-        },
-        {
-          "id": "0a77118b-afdc-4a72-b249-9ff744341f67",
-          "name": "teste-3",
-          "cost": "333",
-          "description": "tudo,isso",
-          "date": "2025-01-21"
-        }
-      ],
-      "id": "47954e3d-3e52-40c9-b216-fdc8623f33da",
-      "status": "em-andamento",
+      "cost": 0,
+      "tasks": [],
+      "services": [],
+      "id": "21212541-2502-41b0-9a76-2e75cd49d6ae",
       "userId": "270f8d52-5384-4ac0-8219-e38a89c4b402",
       "isAdm": true
     }

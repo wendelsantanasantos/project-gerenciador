@@ -1,5 +1,4 @@
 import style from "./projectCard.module.css";
-import { BsPencil, BsFillTrashFill } from "react-icons/bs";
 import ProgressBar from '@ramonak/react-progress-bar';
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,6 @@ function ProjectCard({
   name,
   budget,
   category,
-  handleRemove,
   prazo,
   status,
 }) {
@@ -39,26 +37,19 @@ function formatStatus(status) {
   return statusMap[status?.toLowerCase()] || "Pendente"; // Retorna "Pendente" por padrão
 }
 
-
-
-  const remove = (e) => {
-    e.preventDefault();
-    handleRemove(id);
-  };
-
   const getProgress = (status) => {
     switch (status) {
-      case "Planejando":
+      case "planejando":
         return { progress: 10, label: "Planejando" };
-      case "Aguardando-aprovacao":
+      case "aguardando-aprovacao":
         return { progress: 20, label: "Aguardando aprovação" };
-      case "Pendente":
+      case "pendente":
         return { progress: 30, label: "Pendente" };
-      case "Em-andamento":
+      case "em-andamento":
         return { progress: 60, label: "Em andamento" };
-      case "Em-revisao":
+      case "em-revisao":
         return { progress: 80, label: "Em revisão" };
-      case "Concluido":
+      case "concluido":
         return { progress: 100, label: "Concluído" };
       default:
         return { progress: 0, label: "Não iniciado" };
@@ -104,15 +95,8 @@ function formatStatus(status) {
   baseBgColor="#cadfe2"
   width="100%"
   style={{ marginTop: "2em" }}
-/>;
+/>
 
-      </div>
-
-      <div className={style.projectCard_actions}>
-      
-        <button onClick={remove}>
-          <BsFillTrashFill /> Delete
-        </button>
       </div>
       </div>
     </div>

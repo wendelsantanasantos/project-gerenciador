@@ -8,18 +8,19 @@ import imgTeam from '../../img/team-img.png'
 import { FaTasks } from "react-icons/fa";
 import { MdAttachMoney } from "react-icons/md";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
+import { LuLightbulb } from "react-icons/lu";
+import { BsGraphUp } from "react-icons/bs";
+import { IoLogoAppleAr } from "react-icons/io5";
+import { IoIosUnlock } from "react-icons/io";
 
 
+import  printNexus  from '../../img/print-nexus.png'
 
 
-function Home() {
-    useEffect(() => {     
-        initParticles(); 
-    }, []);
+const Home = () => {
 
     return (
         <section className={styles.home_container}>
-            <canvas id="particles-js" className={styles.particles_canvas}></canvas>
             
             <div  className={styles.container1}>
             <div className={styles.text_section}>
@@ -65,22 +66,48 @@ function Home() {
                 </div>
             </section>
 
+        
+
             {/* Seção de vantagens */}
+            
             <section className={styles.advantages_section}>
+
                 <h2>Vantagens de Usar o Nexus</h2>
-                <div className={styles.advantages_list}>
-                    <div className={styles.advantage_item}>
-                        <h3>Facilidade de Uso</h3>
-                        <p>Com uma interface intuitiva, qualquer membro da equipe pode começar rapidamente, sem precisar de treinamento.</p>
+                <div className={styles.advantages_section_info}>
+                
+                    <div className={styles.advantages_list}>
+                        <div className={styles.advantage_item}>
+                        <LuLightbulb />
+
+                            <h3>Facilidade de Uso</h3>
+                            <p>Com uma interface intuitiva, qualquer membro da equipe pode começar rapidamente, sem precisar de treinamento.</p>
+                        </div>
+                        <div className={styles.advantage_item}>
+                        <IoLogoAppleAr />
+
+                            <h3>Flexibilidade</h3>
+                            <p>Adaptável a diferentes tipos de projetos e equipes, com funcionalidades customizáveis para se adequar às suas necessidades.</p>
+                        </div>
+                        <div className={styles.advantage_item}>
+                        <BsGraphUp />
+
+                            <h3>Escalabilidade</h3>
+                            <p>Cresça com o seu projeto! Nexus é ideal tanto para pequenas equipes quanto para grandes organizações.</p>
+                        </div>
+                        <div className={styles.advantage_item}>
+                        <IoIosUnlock />
+
+                            <h3>Segurança e Privacidade</h3>
+                            <p>Garanta a segurança e privacidade dos seus dados, garantindo que eles sejam tratados com respeito e confidencialidade.</p>
+                        </div>
+
+                        
                     </div>
-                    <div className={styles.advantage_item}>
-                        <h3>Flexibilidade</h3>
-                        <p>Adaptável a diferentes tipos de projetos e equipes, com funcionalidades customizáveis para se adequar às suas necessidades.</p>
+
+                    <div className={styles.print_container}>
+                        <img src={printNexus} alt="print do site" />
                     </div>
-                    <div className={styles.advantage_item}>
-                        <h3>Escalabilidade</h3>
-                        <p>Cresça com o seu projeto! Nexus é ideal tanto para pequenas equipes quanto para grandes organizações.</p>
-                    </div>
+
                 </div>
             </section>
             

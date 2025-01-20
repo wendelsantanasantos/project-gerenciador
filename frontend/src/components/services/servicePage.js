@@ -1,8 +1,11 @@
 import styles from './servicePage.module.css';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loading from "../Layout/Loading";
-import ServiceForm from './ServiceForm'; // Importando o componente do formulário de serviço
+import ServiceForm from './ServiceForm';
+import { ImBin } from "react-icons/im";
+import { Navigate } from 'react-router-dom';
+
 
 function ServicePage() {
     const { id } = useParams();
@@ -10,7 +13,8 @@ function ServicePage() {
     const [msg, setMsg] = useState('');
     const [type, setType] = useState('');
     const [showServiceForm, setShowServiceForm] = useState(false);
-    const [isAdm, setIsAdm] = useState(false); 
+    const [isAdm, setIsAdm] = useState(false);
+    const navigate = useNavigate(); 
 
     const backendUrl = "http://localhost:5000"; // URL base do backend
 
@@ -71,11 +75,6 @@ function ServicePage() {
         setShowServiceForm(prevState => !prevState);
     };
 
-    const handleAddService = (formData) => {
-        console.log("Dados do formulário:", formData);
-    };
-
-    
     function foramatarData(data) {
         const novaData = data.replace(/-/g, '/');
         return novaData
@@ -87,6 +86,25 @@ function ServicePage() {
     }
     function getFileName(filePath) {
         return filePath.replace(/^.*[\\\/]/, '');
+    }
+
+    function removeService(id) {
+        fetch(`http://localhost:5000/projects/services/${service.id}/remove`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((resp) => resp.json())
+        .then(() => {
+            navigate('/MeusProjetos', {state: {msg: 'Serviço removido com sucesso!'}})
+        })
+        .catch((erro) => {
+            console.error('Erro ao remover Serviço:', erro);
+            setMsg('Erro ao remover Serviço!');
+            setType('error');
+            
+        });
     }
 
 
@@ -102,9 +120,17 @@ function ServicePage() {
 
                     <div className={styles.services_form_container}>
                         {isAdm && (
-                            <button onClick={toggleServiceForm} className={styles.btn}>
-                                {!showServiceForm ? 'Editar Serviço' : 'Fechar'}
-                            </button>
+                            <>
+                                <button onClick={toggleServiceForm} className={styles.btn}>
+                                    {!showServiceForm ? 'Editar Serviço' : 'Fechar'}
+                                </button>
+
+                                <button onClick={() => removeService(service.id)} className={styles.btn}>
+                                    <ImBin /> Remover Serviço
+                                </button>
+                            </>
+
+
                         )}
                         {showServiceForm && (
                             <div className={styles.project_info}>

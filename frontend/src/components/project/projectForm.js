@@ -48,21 +48,28 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
       };
 
       const statusOptions = [
-        'Planejando',
-        'Aguardando aprovação',
-        'Pendente',
-        'Em andamento',
-        'Em revisão',
-        'Concluído',
-      ].map((status) => ({
-        id: status.toLowerCase().replace(/ /g, '-').normalize('NFD').replace(/[\u0300-\u036f]/g, ''), // Remove acentos e formata para URL-friendly
-        name: status,
-      }));
-      
-     
-      
-      
+        'planejando',
+        'aguardando-aprovacao',
+        'pendente',
+        'em-andamento',
+        'em-revisao',
+        'concluido',
+      ]
 
+      function formatStatus(status) {
+        const statusMap = {
+          planejando: "Planejando",
+          "aguardando-aprovacao": "Aguardando aprovação",
+          pendente: "Pendente",
+          "em-andamento": "Em andamento",
+          "em-revisao": "Em revisão",
+          concluido: "Concluído",
+        };
+      
+        return statusMap[status?.toLowerCase()] || "Pendente"; // Retorna "Pendente" por padrão
+      }
+      
+      
     const handleChange = (e) => {
         setProject({
             ...project,
@@ -161,7 +168,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
                    text="Status do projeto"
                       name="status"
               handleOnChange={handleChange}
-        options={statusOptions}
+        options={statusOptions.map((status) => ({ id: status, name: formatStatus(status) }))}
         value={project.status || ''}
       />
                 </div>

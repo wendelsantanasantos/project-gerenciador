@@ -16,7 +16,7 @@ function Footer(){
                 <FaLinkedin/>
             </li>
            </ul>
-           <p><span>Cost</span>&copy;2024</p>
+           <p><span>Nexus - Todos os direitos reservados</span>&copy;2024</p>
        </footer>
     )
 }

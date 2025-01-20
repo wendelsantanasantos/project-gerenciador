@@ -74,7 +74,6 @@
 .particles_canvas {
     position: absolute;
     width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
     z-index: 0;
@@ -98,6 +97,7 @@
     padding: 4em 2em;
     text-align: center;
     color: #333;
+    border-top: 1px solid var(--textColor--);
 
 }
 
@@ -119,6 +119,12 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-top: 3px solid var(--backgroundcolor--);
+    transition: 0.5s ease;
+}
+
+.feature_item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .feature_item svg{
@@ -142,30 +148,74 @@
 }
 
 .advantages_section {
-    padding: 4em 2em;
+    padding: 2em 0em;
     text-align: center;
     color: #333;
+    border-top: 1px solid var(--textColor--);
+
+
+}
+
+.advantages_section_info{
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--textColor--);
+    padding: 2em 0;
+
 }
 
 .advantages_section h2 {
     font-size: 2.5em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
+}
+
+.advantages_list svg{
+    width:40px;
+    height: 40px;   
+     margin-bottom: .5em;
+     color: var(--textColor--);
 }
 
 .advantages_list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2em;
+    gap: .5em;
+    grid-template-columns: repeat(1, 1fr);
+    width: 30%;
+
 }
 
 .advantage_item {
-    padding: 1.5em;
+    padding: 1em;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-top: 3px solid var(--backgroundcolor--);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.advantage_item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.342);
 }
 
 .advantage_item h3 {
-    font-size: 1.8em;
+    font-size: 1.4em;
     margin-bottom: 1em;
+}
+
+.print_container {
+
+    background-color: var(--backgroundcolor--);
+    padding: 1em;
+    border-radius: .4em;
+    min-width: 300px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.print_container img{
+    width: 100%;
+    object-fit: contain;
+
 }
