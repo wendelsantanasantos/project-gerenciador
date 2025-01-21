@@ -14,13 +14,13 @@ function Contato() {
             </div>
 
             <div className={styles.cards}>
-                <div className={styles.card}>
+                <div className={styles.card + " " + styles.card1}>
                     <h2>Perguntas gerais</h2>
                     <p>Envie uma mensagem usando o formulário abaixo e entraremos em contato dentro de um dia útil.</p>
-                    <a href="/home" className={styles.button}>Entre em contato</a>
+                    <a href="/Home" className={styles.button}>Entre em contato</a>
                 </div>
 
-                <div className={styles.card}>
+                <div className={styles.card + " " + styles.card2}>
                     <h2>Redes Sociais</h2>
                     <p>Siga-nos nas redes sociais e fique por dentro das novidades.</p>
                     <p>

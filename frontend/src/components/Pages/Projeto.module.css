@@ -125,7 +125,9 @@
     padding: 1em;
     border-radius: .1em;
     transition: 0.3s ease-in-out;
+    margin-right: .3em;
 }
+
 
 .btn:hover{
     color: var(--textColor--);

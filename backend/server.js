@@ -220,7 +220,7 @@ app.get("/auth/google/callback",
 
     // Define o token no cookie
     res.cookie("token", token, { httpOnly: true });
-    res.redirect(`http://localhost:3000/login/success?token=${token}`);
+    res.redirect(`http://localhost:3000/MeusProjetos`);
   }
 );
 

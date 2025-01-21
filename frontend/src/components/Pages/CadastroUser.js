@@ -6,6 +6,8 @@ import { useState } from "react";
 import { BsPersonPlusFill } from "react-icons/bs";
 import { BsEyeFill } from "react-icons/bs";
 import { BsEyeSlashFill } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+
 
 
 function CadastroUser({ userData }) {
@@ -58,6 +60,12 @@ function CadastroUser({ userData }) {
     e.preventDefault();
     setShowPassword(!showPassword);
   }
+
+  
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/auth/google";
+  };
+
 
   return (
     <div className={styles.CadastroUser}>
@@ -116,6 +124,12 @@ function CadastroUser({ userData }) {
 
         <SubmitBtn text="Cadastrar" />
       </form>
+
+      
+      <div className={styles.google} onClick={handleGoogleLogin}>
+                    <FcGoogle /><p>Google</p>
+                    </div>
+                    
       {msg && <p className={styles.msg}>{msg}</p>}
 
       <p>

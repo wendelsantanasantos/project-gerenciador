@@ -8,29 +8,28 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding-top: 6em; 
 }
 
 .header {
     text-align: center;
-    margin-bottom: 30px;
+    margin: 1em;
 }
 
 .header h1 {
-    color: #03258C; /* Título */
+    color: var(--backgroundcolor--)
 }
 
 .header p {
     font-size: 18px;
-    color: #011830;
-    margin-bottom: 100px;
+    margin-bottom: 1em;
 }
 
 .cards {
     display: flex;
     justify-content: center;
     text-align: center;
-    gap: 20px;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
@@ -39,42 +38,58 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #D9D9D9; 
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.199);
     width: 400px;
     height: 400px;
     padding: 20px;
-    border: 1px solid blue;
+}
+
+.card1 {
+    background-color: var(--backgroundcolor--); 
+    color: var(--backgroundcolor2--);
+}
+
+.card2 {
+    background-color: var(--backgroundcolor2--); 
+    color: var(--backgroundcolor--);
 }
 
 .card h2 {
-    color: #011830;
     font-size: 25px;
     margin-bottom: 10px;
     font-family: Tahoma, sans-serif;
 }
 
 .card p {
-    color: #011830;
     font-size: 16px;
     margin-bottom: 20px;
 }
 
 .card a {
-    display: inline-block;
-    background-color: #01A6DF; 
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--textColor2--); 
+    color: var(--backgroundcolor2--);
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
     margin: 2px;
-    width: 150px;
+    min-width: 150px;
+    transition: .5s ease-in-out;
+}
+
+
+.card a svg {
+    margin-right: .2em;
+    font-size: 1.5em;
 }
 
 .card a:hover {
-    background-color: #03258C; 
+    color: var(--backgroundcolor--);
+    background-color: var(--textColor--);
 }
 
 .footer {

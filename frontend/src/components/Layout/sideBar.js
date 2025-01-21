@@ -25,6 +25,11 @@ function SideBar() {
   function showMenuBtn() {
     setShowMenu(!showMenu);
   }
+
+  function closeMenu() {
+    setShowMenu(false);
+  }
+
     if (location.pathname === "/") {
       return null;
     }
@@ -49,30 +54,30 @@ function SideBar() {
             </Link>
           </li>
           <li>
-            <Link to="/MeusProjetos">
-            <span><BsFileEarmarkTextFill /></span><p>My Projects</p></Link>
+            <Link to="/MeusProjetos" onClick={closeMenu}>
+            <span><BsFileEarmarkTextFill /></span><p>Meus Projetos</p></Link>
           </li>
           <li>
-            <Link to="/ProjetosEquipe">
-            <span><RiTeamFill /></span><p>Collaborators</p></Link>
+            <Link to="/ProjetosEquipe" onClick={closeMenu}>
+            <span><RiTeamFill /></span><p>Colaboração</p></Link>
           </li>
           <li>
-            <Link to="/Empresa">
-             <span>  <BsBriefcaseFill /></span><p>Company</p></Link>
+            <Link to="/Empresa" onClick={closeMenu}>
+             <span>  <BsBriefcaseFill /></span><p>Empresa</p></Link>
           </li>
           <li>
-            <Link to="/NovoProjeto">
+            <Link to="/NovoProjeto" onClick={closeMenu}>
               <span><BsBoxes /></span>
-            <p>New Project</p></Link>
+            <p>Novo Projeto</p></Link>
           </li>
 
           <li>
-            <Link to="/Contato">
-              <span><TbMessage /></span><p>Contact</p></Link>
+            <Link to="/Contato" onClick={closeMenu}>
+              <span><TbMessage /></span><p>Contato</p></Link>
           </li>
 
           <li>
-            <Link to="/Login"> <span><VscAccount /></span><p>Login</p></Link>
+            <Link to="/Login" onClick={closeMenu}> <span><VscAccount /></span><p>Login</p></Link>
           </li>
         </ul>
     

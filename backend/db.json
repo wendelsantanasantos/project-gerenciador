@@ -36,9 +36,17 @@
       "members": [
         "113120712665920315538"
       ],
-      "cost": 0,
+      "cost": 10,
       "tasks": [],
-      "services": [],
+      "services": [
+        {
+          "id": "7e8ce4b6-7eb0-4788-9020-1b8edc8ff566",
+          "name": "Wendel de Santana Santos",
+          "cost": "15",
+          "description": "we",
+          "date": "2025-01-23"
+        }
+      ],
       "id": "ea446a52-8809-4b66-91af-a60bd457517b",
       "userId": "113120712665920315538",
       "isAdm": true

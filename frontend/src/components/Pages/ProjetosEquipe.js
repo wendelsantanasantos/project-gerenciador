@@ -62,6 +62,7 @@ function ProjetosEquipe() {
             <ProjectCard
               key={project.id}
               id={project.id}
+              status={project.status}
               name={project.name}
               prazo={project.end_date}
               budget={project.budget}

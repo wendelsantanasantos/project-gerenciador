@@ -121,3 +121,33 @@
 .eye:hover {
   color: #555;
 }
+
+
+.google{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--backgroundcolor--);
+  padding: .7em;
+  margin-top: 1em;
+  transition: .5s ease-in-out;
+ }
+
+ .google:hover{
+  background-color: var(--backgroundcolor--);
+  cursor: pointer;
+ }
+
+ .google  p{
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-left: 5px;
+ }
+
+ .google:hover p{
+  color: var(--backgroundcolor2--);
+ }
+
+ .google svg{
+  font-size: 1.5em;
+ }

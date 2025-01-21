@@ -18,12 +18,14 @@ function ServiceCard({ id, name, cost, description, isAdm }) {
   };
 
   return (
-    <div className={styles.projectCard} onClick={redirect}>
+    <div className={styles.serviceCard} onClick={redirect}>
       <h4>{name}</h4>
+      <div className={styles.serviceCard_info}>
       <p>
         <span>Custo total:</span> {cost}
       </p>
-      <p>{description}</p>
+      <p> <span>Descrição:</span>{description}</p>
+      </div>
     </div>
   );
 }

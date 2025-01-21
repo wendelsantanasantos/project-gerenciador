@@ -320,7 +320,7 @@ function Projeto() {
                     {isAdm  && (
                           <div><button className={styles.btn} onClick={toggleProjectForm}>{!showProjectForm ? 'Editar Projeto' : 'Fechar'}</button>
 
-                            <button className={styles.btn} onClick={removeProject}>{'Excluir Projeto'}</button>
+                            <button className={styles.btn } onClick={removeProject}><ImBin />{'Excluir Projeto'}</button>
                           
                           </div>
 

@@ -107,7 +107,7 @@ function Login({ handleSubmit, btnText, userData }) {
 
      
                     <div className={styles.google} onClick={handleGoogleLogin}>
-                       <p><FcGoogle />Google</p>
+                    <FcGoogle /><p>Google</p>
                     </div>
                 
               
