@@ -1,9 +1,9 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const fs = require("fs").promises; // Para manipulação de arquivos
-const dbPath = "db.json"; // Caminho do arquivo db.json
+const fs = require("fs").promises;
+const dbPath = "db.json"; 
 
-// Configurando a estratégia Google
+
 passport.use(
   new GoogleStrategy(
     {
@@ -18,11 +18,10 @@ passport.use(
       console.log("User Profile:", profile);
 
       try {
-        // Lendo o db.json
+
         const data = await fs.readFile(dbPath, "utf-8");
         const db = JSON.parse(data);
 
-        // Verificando se o usuário já existe
         let user = db.users.find((u) => u.id === profile.id);
 
         if (!user) {
@@ -34,7 +33,6 @@ passport.use(
             photo: profile.photos[0].value,
           };
 
-          // Adicionando o novo usuário ao db.json
           db.users.push(user);
           await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
 

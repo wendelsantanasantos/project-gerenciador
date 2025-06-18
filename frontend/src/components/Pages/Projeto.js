@@ -64,8 +64,7 @@ function Projeto() {
                 formData.append('files', file);
             });
         }
-    
-        // Calcula o novo custo do projeto
+
         const serviceCost = parseFloat(lastService.cost);
         const newCost = parseFloat(project.cost) + serviceCost;
     
@@ -74,15 +73,11 @@ function Projeto() {
             setType('error');
             return;
         }
-    
-        // Atualiza o projeto localmente
         const updatedProject = {
             ...project,
             cost: newCost,
             services: [...projectServices, lastService],
         };
-    
-        // Envio para o servidor
         fetch(`http://localhost:5000/projects/${project.id}/services`, {
             method: 'POST',
             body: formData,
@@ -95,8 +90,8 @@ function Projeto() {
             })
             .then((data) => {
                 console.log('Serviço criado com sucesso!', data.services);
-                setProject(data); // Atualiza o estado do projeto
-                setServices(data.services); // Atualiza a lista de serviços
+                setProject(data);
+                setServices(data.services); 
                 setMsg('Serviço criado com sucesso!');
                 setType('success');
             })
@@ -148,7 +143,7 @@ function Projeto() {
     
         fetch(`http://localhost:5000/projects/${project.id}/tasks`, {
             method: 'POST',
-            body: formData, // Envia o FormData diretamente
+            body: formData,
         })
         .then((resp) => resp.json())
         .then((data) => {
@@ -219,7 +214,7 @@ function Projeto() {
     }, [id]);
 
     useEffect(() => {
-    }, [taskMembers]);  // O efeito será acionado sempre que taskMembers for atualizado
+    }, [taskMembers]); 
     
     
 
@@ -303,7 +298,7 @@ function Projeto() {
           concluido: "Concluído",
         };
       
-        return statusMap[status?.toLowerCase()] || "Pendente"; // Retorna "Pendente" por padrão
+        return statusMap[status?.toLowerCase()] || "Pendente";
       }
       
 

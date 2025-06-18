@@ -7,13 +7,10 @@ function NovoProjeto() {
     const navigate = useNavigate()
 
     function criarPost(project) {
-        // Inicializando o projeto
         project.cost = 0
         project.tasks = []
         project.services = []
 
-
-        // Enviando a requisição POST para o backend
         fetch('http://localhost:5000/projects', { 
             method: 'POST',
             headers: {

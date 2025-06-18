@@ -88,10 +88,6 @@ function CadastroUser({ userData }) {
                 
           </label>
       </div>
-
-
-
-
         <Input
           type="text"
           text="Nome"

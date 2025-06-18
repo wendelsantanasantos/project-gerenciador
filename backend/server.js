@@ -207,24 +207,20 @@ app.get(
 );
 
 
-// Callback do Google após login
+
 app.get("/auth/google/callback",
   passport.authenticate("google", { session: false }),
   (req, res) => {
     const user = req.user;
 
-    // Gera um token JWT para o usuário
     const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
       expiresIn: "10h",
     });
 
-    // Define o token no cookie
     res.cookie("token", token, { httpOnly: true });
     res.redirect(`http://localhost:3000/MeusProjetos`);
   }
 );
-
-// Rota para obter todos os projetos
 app.get("/projects", authMiddleware, async (req, res) => {
   try {
     const data = await fs.readFile(dbPath, "utf-8");
@@ -247,9 +243,6 @@ app.get("/projects", authMiddleware, async (req, res) => {
   }
 });
 
-
-
-// Rota para obter os projetos compartilhados
 app.get("/projects/team", authMiddleware, async (req, res) => {
   try {
     const data = await fs.readFile(dbPath, "utf-8");
@@ -272,7 +265,6 @@ app.get("/projects/team", authMiddleware, async (req, res) => {
   }
 })
 
-// Rota para obter todas as categorias
 app.get("/categories",authMiddleware, async (req, res) => {
   try {
     const data = await fs.readFile(dbPath, "utf-8");
@@ -284,7 +276,6 @@ app.get("/categories",authMiddleware, async (req, res) => {
   }
 });
 
-// Rota para adicionar um novo projeto
 app.post("/projects", authMiddleware, async (req, res) => {
   const newProject = req.body;
   const id = uuidv4();
@@ -319,7 +310,6 @@ app.post("/projects", authMiddleware, async (req, res) => {
   }
 });
 
-// Busca um projeto pelo ID
 app.get("/projects/:id",authMiddleware, async (req, res) => {
   const { id } = req.params;
   
@@ -352,7 +342,6 @@ app.get("/projects/:id",authMiddleware, async (req, res) => {
   }
 });
 
-// Buscando Serviço
 app.get("/services/:id", authMiddleware, async (req, res) => {
   const { id: serviceId } = req.params;
 
@@ -380,7 +369,6 @@ app.get("/services/:id", authMiddleware, async (req, res) => {
   res.status(200).json(service);
 });
 
-//Buscando Tasks
 app.get("/tasks/:id", authMiddleware, async (req, res) => {
   const { id: taskId } = req.params;
 
@@ -407,7 +395,7 @@ app.get("/tasks/:id", authMiddleware, async (req, res) => {
   res.status(200).json(task);
 
 });
-// Atualiza as informações de um projeto
+
 app.patch("/projects/:id", async (req, res) => {
   console.log("Recebida uma requisição para atualizar um projeto");
 
@@ -449,8 +437,6 @@ app.patch("/projects/:id", async (req, res) => {
   }
 });
 
-
-// Deleta um projeto
 app.delete("/projects/:id/remove", async (req, res) => {
   const { id } = req.params;
 
@@ -476,7 +462,7 @@ app.delete("/projects/:id/remove", async (req, res) => {
   }
 });
 
-// Adiciona um serviço ao projeto
+
 app.post("/projects/:id/services", upload.array('file', 10), async (req, res) => {
   const { id } = req.params;
   const newService = req.body; // Obtém os dados do serviço enviados no corpo da requisição
@@ -536,7 +522,6 @@ app.post("/projects/:id/services", upload.array('file', 10), async (req, res) =>
   }
 });
 
-// Atualiza as informações de um  serviço
 app.patch("/projects/services/:id/edit", async (req, res) => {
 
     const { id: serviceId } = req.params;
@@ -587,7 +572,6 @@ app.patch("/projects/services/:id/edit", async (req, res) => {
     }
   });
 
-  
 app.patch("/projects/tasks/:id/edit", upload.array('file' ), async (req, res) => {
     const { id: taskId } = req.params;
   
@@ -644,7 +628,6 @@ app.patch("/projects/tasks/:id/edit", upload.array('file' ), async (req, res) =>
   });
   
  
-// Deleta um serviço do projeto
 app.delete("/projects/services/:serviceId/remove", async (req, res) => {
   const { serviceId } = req.params;
 
@@ -784,8 +767,6 @@ app.get("/usersSearch", async (req, res) => {
     res.status(500).json("Erro ao ler o arquivo db.json");
   }
 });
-
-//rota para buscar os membros pelo id
 
 app.get("/members/:memberId", async (req, res) => {
   
